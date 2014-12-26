@@ -6,6 +6,7 @@ This is the Openfl/NME examples repository for the Haxe version of the as3 Daeda
 https://github.com/Justinfront/hxDaedalus-Examples
 
 These examples require the current haxe hxDaedalus library, which can be found here:
+
 https://github.com/Justinfront/hxDaedalus
 
 You can view some of the examples:
