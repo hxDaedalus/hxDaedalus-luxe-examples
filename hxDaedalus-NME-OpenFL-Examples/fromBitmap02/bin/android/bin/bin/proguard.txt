@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:14
+-keep class hxDaedalus.examples.fromBitmap02.fromBitmap02.MainActivity { <init>(...); }
+

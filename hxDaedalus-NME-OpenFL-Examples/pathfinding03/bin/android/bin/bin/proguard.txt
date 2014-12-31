@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:14
+-keep class hxDaedalus.examples.pathfinding03.pathfinding03.MainActivity { <init>(...); }
+

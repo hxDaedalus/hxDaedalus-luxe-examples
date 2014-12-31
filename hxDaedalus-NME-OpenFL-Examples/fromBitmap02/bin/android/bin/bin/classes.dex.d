@@ -1,0 +1,26 @@
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes.dex : \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\hxDaedalus\examples\fromBitmap02\fromBitmap02\BuildConfig.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\hxDaedalus\examples\fromBitmap02\fromBitmap02\MainActivity.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\hxDaedalus\examples\fromBitmap02\fromBitmap02\R$attr.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\hxDaedalus\examples\fromBitmap02\fromBitmap02\R$drawable.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\hxDaedalus\examples\fromBitmap02\fromBitmap02\R.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\GameActivity$1.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\GameActivity.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$1.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$10.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$11.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$12.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$2.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$3.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$4.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$5.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$6.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$7.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$8.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$9.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView$Renderer.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\MainView.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\ManagedMediaPlayer$1.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\ManagedMediaPlayer.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\classes\org\haxe\lime\Sound.class \
+C:\myOSstuff\Daedalus\examples\examplesNew\hxDaedalus-NME-OpenFL-Examples\fromBitmap02\bin\android\bin\bin\dexedLibs\classes-71b60a946d55b837f010867a35a049af.jar \

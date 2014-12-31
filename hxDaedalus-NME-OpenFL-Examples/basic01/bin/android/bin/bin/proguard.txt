@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:14
+-keep class hxDaedalus.examples.basic01.basic01.MainActivity { <init>(...); }
+

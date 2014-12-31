@@ -1,0 +1,26 @@
+-main ApplicationMain 
+-cp C:/HaxeLibrary/openfl/2,1,8
+-D openfl=2.1.8
+-cp C:/HaxeLibrary/hxcpp/3,1,48
+-D hxcpp=3.1.48
+-cp C:/HaxeLibrary/actuate/1,7,5
+-D actuate=1.7.5
+-cp C:/HaxeLibrary/hxDaedalus/0,0,1
+-D hxDaedalus=0.0.1
+-cp src
+-cp C:\HaxeLibrary/lime/2,0,3/legacy
+-D tools=2.0.3
+-D lime-legacy
+-D no-compilation
+-D native
+-D openfl-native
+-D lime-native
+-D android
+-D mobile
+--remap flash:openfl
+-cp bin/android/haxe
+-cpp bin/android/obj
+-D android
+-D android-9
+-debug
+--macro keep("hxDaedalus.examples.basic01.Main")
