@@ -27,19 +27,11 @@ class ApplicationMain {
 		var types = [];
 		
 		
-		urls.push ("img/galapagosBW.png");
+		urls.push ("img/FromBitmap.png");
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("img/galapagosColor.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("GalapagosBW");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("GalapagosColor");
+		urls.push ("TestImage");
 		types.push (AssetType.IMAGE);
 		
 		
@@ -95,19 +87,19 @@ class ApplicationMain {
 			depthBuffer: false,
 			fps: Std.int (60),
 			fullscreen: false,
-			height: Std.int (780),
+			height: Std.int (600),
 			orientation: "",
 			resizable: true,
 			stencilBuffer: false,
-			title: "bitmapPathfinding04",
+			title: "fromBitmap02",
 			vsync: false,
-			width: Std.int (1024),
+			width: Std.int (600),
 			
 		}
 		
 		#if js
 		#if munit
-		flash.Lib.embed (null, 1024, 780, "FFFFFF");
+		flash.Lib.embed (null, 600, 600, "FFFFFF");
 		#end
 		#else
 		create ();
@@ -123,7 +115,7 @@ class ApplicationMain {
 		
 		var hasMain = false;
 		
-		for (methodName in Type.getClassFields (hxDaedalus.examples.bitmapPathfinding04.Main)) {
+		for (methodName in Type.getClassFields (hxDaedalus.examples.fromBitmap02.Main)) {
 			
 			if (methodName == "main") {
 				
@@ -136,7 +128,7 @@ class ApplicationMain {
 		
 		if (hasMain) {
 			
-			Reflect.callMethod (hxDaedalus.examples.bitmapPathfinding04.Main, Reflect.field (hxDaedalus.examples.bitmapPathfinding04.Main, "main"), []);
+			Reflect.callMethod (hxDaedalus.examples.fromBitmap02.Main, Reflect.field (hxDaedalus.examples.fromBitmap02.Main, "main"), []);
 			
 		} else {
 			
@@ -172,7 +164,7 @@ class ApplicationMain {
 
 #if flash @:build(DocumentClass.buildFlash())
 #else @:build(DocumentClass.build()) #end
-@:keep class DocumentClass extends hxDaedalus.examples.bitmapPathfinding04.Main {}
+@:keep class DocumentClass extends hxDaedalus.examples.fromBitmap02.Main {}
 
 
 #else

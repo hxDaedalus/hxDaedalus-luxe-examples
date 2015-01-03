@@ -15,6 +15,7 @@
 -D lime-opengl
 -D openfl-flash
 -D lime-curl
+-D fdb
 -D web
 -swf-lib bin/flash/obj/assets.swf
 -swf-version 11.2

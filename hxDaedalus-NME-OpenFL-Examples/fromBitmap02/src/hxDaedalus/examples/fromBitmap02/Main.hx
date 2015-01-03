@@ -12,10 +12,6 @@ import flash.display.BitmapData;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 
-/**
- * ...
- * @author JLM
- */
 @:bitmap("assets/img/FromBitmap.png")
 class TestImage extends flash.display.BitmapData { }
 

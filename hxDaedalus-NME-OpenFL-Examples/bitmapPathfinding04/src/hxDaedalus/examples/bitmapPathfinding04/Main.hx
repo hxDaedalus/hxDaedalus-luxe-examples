@@ -8,6 +8,7 @@ import hxDaedalus.data.Object;
 import hxDaedalus.factories.BitmapObject;
 import hxDaedalus.factories.RectMesh;
 import hxDaedalus.view.SimpleView;
+import openfl.Assets;
 
 import flash.display.MovieClip;
 import flash.display.Stage;
@@ -18,10 +19,6 @@ import flash.display.Sprite;
 import flash.events.KeyboardEvent;
 import flash.Lib;
 
-/**
- * ...
- * @author JLM
- */
 @:bitmap("assets/img/galapagosBW.png")
 class GalapagosBW extends flash.display.BitmapData {}
 

@@ -13,11 +13,6 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 
-/**
- * ...
- * @author JLM
- */
-
 class Main extends Sprite 
 {
 	var inited:Bool;

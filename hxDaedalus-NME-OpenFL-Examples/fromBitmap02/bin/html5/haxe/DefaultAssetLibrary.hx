@@ -44,32 +44,20 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
-		className.set ("img/galapagosBW.png", __ASSET__img_galapagosbw_png);
-		type.set ("img/galapagosBW.png", AssetType.IMAGE);
-		className.set ("img/galapagosColor.png", __ASSET__img_galapagoscolor_png);
-		type.set ("img/galapagosColor.png", AssetType.IMAGE);
-		className.set ("GalapagosBW", __ASSET__galapagosbw);
-		type.set ("GalapagosBW", AssetType.IMAGE);
-		className.set ("GalapagosColor", __ASSET__galapagoscolor);
-		type.set ("GalapagosColor", AssetType.IMAGE);
+		className.set ("img/FromBitmap.png", __ASSET__img_frombitmap_png);
+		type.set ("img/FromBitmap.png", AssetType.IMAGE);
+		className.set ("TestImage", __ASSET__testimage);
+		type.set ("TestImage", AssetType.IMAGE);
 		
 		
 		#elseif html5
 		
 		var id;
-		id = "img/galapagosBW.png";
+		id = "img/FromBitmap.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "img/galapagosColor.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "GalapagosBW";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
-		id = "GalapagosColor";
+		id = "TestImage";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -82,25 +70,17 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
-		
-		
 		#end
 		
 		#if (windows || mac || linux)
 		
 		/*var useManifest = false;
 		
-		className.set ("img/galapagosBW.png", __ASSET__img_galapagosbw_png);
-		type.set ("img/galapagosBW.png", AssetType.IMAGE);
+		className.set ("img/FromBitmap.png", __ASSET__img_frombitmap_png);
+		type.set ("img/FromBitmap.png", AssetType.IMAGE);
 		
-		className.set ("img/galapagosColor.png", __ASSET__img_galapagoscolor_png);
-		type.set ("img/galapagosColor.png", AssetType.IMAGE);
-		
-		className.set ("GalapagosBW", __ASSET__galapagosbw);
-		type.set ("GalapagosBW", AssetType.IMAGE);
-		
-		className.set ("GalapagosColor", __ASSET__galapagoscolor);
-		type.set ("GalapagosColor", AssetType.IMAGE);
+		className.set ("TestImage", __ASSET__testimage);
+		type.set ("TestImage", AssetType.IMAGE);
 		*/
 		var useManifest = true;
 		
@@ -675,17 +655,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if !display
 #if flash
 
-@:keep @:bind #if display private #end class __ASSET__img_galapagosbw_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__img_galapagoscolor_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__galapagosbw extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__galapagoscolor extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__img_frombitmap_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__testimage extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 
 
 #elseif html5
 
 #if openfl
-
-
 
 
 
@@ -700,10 +676,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if (windows || mac || linux)
 
 //
-//@:bitmap("assets/img/galapagosBW.png") class __ASSET__img_galapagosbw_png extends openfl.display.BitmapData {}
-//@:bitmap("assets/img/galapagosColor.png") class __ASSET__img_galapagoscolor_png extends openfl.display.BitmapData {}
-//@:bitmap("assets/img/galapagosBW.png") class __ASSET__galapagosbw extends openfl.display.BitmapData {}
-//@:bitmap("assets/img/galapagosColor.png") class __ASSET__galapagoscolor extends openfl.display.BitmapData {}
+//@:bitmap("assets/img/FromBitmap.png") class __ASSET__img_frombitmap_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/img/FromBitmap.png") class __ASSET__testimage extends openfl.display.BitmapData {}
 //
 //
 

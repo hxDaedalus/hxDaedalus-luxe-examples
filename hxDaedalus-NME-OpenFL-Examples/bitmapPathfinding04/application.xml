@@ -21,7 +21,8 @@
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
 	<assets path="assets/img" rename="img" />
-	
+	<assets path="assets/img/galapagosBW.png" rename="GalapagosBW" if="html5" />
+	<assets path="assets/img/galapagosColor.png" rename="GalapagosColor" if="html5" />
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
 	
