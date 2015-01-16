@@ -49,7 +49,7 @@ class Main extends Sprite {
 		_mesh = RectMesh.buildRectangle( 1024, 780 );
 		
 		// show the source bmp
-    #if html5	// load as openfl asset: see DemoFromBitmapPathfinding.xml
+    #if html5	// load as openfl asset: see application.xml
         _bmp = new Bitmap(openfl.Assets.getBitmapData("GalapagosBW"));		
     #else		
         _bmp = new Bitmap(new GalapagosBW(0, 0));
@@ -58,7 +58,7 @@ class Main extends Sprite {
 		_bmp.y = 0;
 		
 		// show the image bmp
-    #if html5	// load as openfl asset: see DemoFromBitmapPathfinding.xml
+    #if html5	// load as openfl asset: see application.xml
         _overlay = new Bitmap(openfl.Assets.getBitmapData("GalapagosColor"));
     #else		
         _overlay = new Bitmap(new GalapagosColor(0, 0));	
