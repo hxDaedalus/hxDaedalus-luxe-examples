@@ -2605,9 +2605,12 @@ hxDaedalus_data_Mesh.prototype = {
 		var _g = this._edges.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			if(this._edges[i].get_nextLeftEdge() == null) return;
+			if(this._edges[i].get_nextLeftEdge() == null) {
+				haxe_Log.trace("!!! missing nextLeftEdge",{ fileName : "Mesh.hx", lineNumber : 794, className : "hxDaedalus.data.Mesh", methodName : "check"});
+				return;
+			}
 		}
-		null;
+		haxe_Log.trace("check OK",{ fileName : "Mesh.hx", lineNumber : 798, className : "hxDaedalus.data.Mesh", methodName : "check"});
 	}
 	,insertVertex: function(x,y) {
 		if(x < 0 || y < 0 || x > this._width || y > this._height) return null;
@@ -3034,7 +3037,11 @@ hxDaedalus_data_Mesh.prototype = {
 		}
 	}
 	,triangulate: function(bound,isReal) {
-		if(bound.length < 2) return; else if(bound.length == 2) {
+		if(bound.length < 2) {
+			haxe_Log.trace("BREAK ! the hole has less than 2 edges",{ fileName : "Mesh.hx", lineNumber : 1396, className : "hxDaedalus.data.Mesh", methodName : "triangulate"});
+			return;
+		} else if(bound.length == 2) {
+			haxe_Log.trace("BREAK ! the hole has only 2 edges",{ fileName : "Mesh.hx", lineNumber : 1403, className : "hxDaedalus.data.Mesh", methodName : "triangulate"});
 			hxDaedalus_debug_Debug.trace("  - edge0: " + bound[0].get_originVertex().get_id() + " -> " + bound[0].get_destinationVertex().get_id(),{ fileName : "Mesh.hx", lineNumber : 1404, className : "hxDaedalus.data.Mesh", methodName : "triangulate"});
 			hxDaedalus_debug_Debug.trace("  - edge1: " + bound[1].get_originVertex().get_id() + " -> " + bound[1].get_destinationVertex().get_id(),{ fileName : "Mesh.hx", lineNumber : 1405, className : "hxDaedalus.data.Mesh", methodName : "triangulate"});
 			return;
@@ -3088,6 +3095,7 @@ hxDaedalus_data_Mesh.prototype = {
 				}
 			}
 			if(!isDelaunay) {
+				haxe_Log.trace("NO DELAUNAY FOUND",{ fileName : "Mesh.hx", lineNumber : 1476, className : "hxDaedalus.data.Mesh", methodName : "triangulate"});
 				var s = "";
 				var _g11 = 0;
 				var _g4 = bound.length;
@@ -3457,6 +3465,8 @@ hxDaedalus_data_math_Geom2D.locatePosition = function(x,y,mesh) {
 	while(_g < numSamples) {
 		var i1 = _g++;
 		var _rnd = hxDaedalus_data_math_Geom2D._randGen.next();
+		hxDaedalus_debug_Debug.assertFalse(_rnd < 0 || _rnd > mesh._vertices.length - 1,"_rnd: " + _rnd,{ fileName : "Geom2D.hx", lineNumber : 67, className : "hxDaedalus.data.math.Geom2D", methodName : "locatePosition"});
+		hxDaedalus_debug_Debug.assertFalse(mesh._vertices == null,"vertices: " + mesh._vertices.length,{ fileName : "Geom2D.hx", lineNumber : 68, className : "hxDaedalus.data.math.Geom2D", methodName : "locatePosition"});
 		hxDaedalus_data_math_Geom2D.__samples.push(mesh._vertices[_rnd]);
 	}
 	var currVertex;
@@ -3503,11 +3513,14 @@ hxDaedalus_data_math_Geom2D.locatePosition = function(x,y,mesh) {
 	}(this))) {
 		faceVisited.h[currFace.__id__];
 		numIter++;
-		if(numIter == 50) null;
+		if(numIter == 50) haxe_Log.trace("WALK TAKE MORE THAN 50 LOOP",{ fileName : "Geom2D.hx", lineNumber : 107, className : "hxDaedalus.data.math.Geom2D", methodName : "locatePosition"});
 		iterEdge.set_fromFace(currFace);
 		do {
 			currEdge = iterEdge.next();
-			if(currEdge == null) return hxDaedalus_data_math_Intersection.ENull;
+			if(currEdge == null) {
+				haxe_Log.trace("KILL PATH",{ fileName : "Geom2D.hx", lineNumber : 115, className : "hxDaedalus.data.math.Geom2D", methodName : "locatePosition"});
+				return hxDaedalus_data_math_Intersection.ENull;
+			}
 			relativPos = hxDaedalus_data_math_Geom2D.getRelativePosition(x,y,currEdge);
 		} while(relativPos == 1 || relativPos == 0);
 		currFace = currEdge.get_rightFace();
@@ -4153,16 +4166,16 @@ var hxDaedalus_debug_Debug = function() { };
 $hxClasses["hxDaedalus.debug.Debug"] = hxDaedalus_debug_Debug;
 hxDaedalus_debug_Debug.__name__ = ["hxDaedalus","debug","Debug"];
 hxDaedalus_debug_Debug.assertTrue = function(cond,message,pos) {
-	return;
+	if(!cond) throw pos.fileName + ":" + pos.lineNumber + ": Expected true but was false! " + (message != null?message:"");
 };
 hxDaedalus_debug_Debug.assertFalse = function(cond,message,pos) {
-	return;
+	if(cond) throw pos.fileName + ":" + pos.lineNumber + ": Expected false but was true! " + (message != null?message:"");
 };
 hxDaedalus_debug_Debug.assertEquals = function(expected,actual,message,pos) {
-	return;
+	if(actual != expected) throw pos.fileName + ":" + pos.lineNumber + ": Expected '" + Std.string(expected) + "' but was '" + Std.string(actual) + "' " + (message != null?message:"");
 };
 hxDaedalus_debug_Debug.trace = function(value,pos) {
-	return;
+	haxe_Log.trace(value,pos);
 };
 var hxDaedalus_factories_RectMesh = function() {
 };
@@ -7140,6 +7153,7 @@ lime_graphics_Renderer.prototype = {
 		if(this.window.div != null) this.context = lime_graphics_RenderContext.DOM(this.window.div); else if(this.window.canvas != null) {
 			var webgl = null;
 			if(webgl == null) this.context = lime_graphics_RenderContext.CANVAS(this.window.canvas.getContext("2d")); else {
+				webgl = WebGLDebugUtils.makeDebugContext(webgl);
 				lime_graphics_opengl_GL.context = webgl;
 				this.context = lime_graphics_RenderContext.OPENGL(lime_graphics_opengl_GL.context);
 			}
@@ -11239,24 +11253,29 @@ openfl_Memory._setPositionTemporarily = function(position,action) {
 	return value;
 };
 openfl_Memory.getByte = function(addr) {
+	if(addr < 0 || addr + 1 > openfl_Memory.len) throw "Bad address";
 	return openfl_Memory.gcRef.data.getInt8(addr);
 };
 openfl_Memory.getDouble = function(addr) {
+	if(addr < 0 || addr + 8 > openfl_Memory.len) throw "Bad address";
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readDouble();
 	});
 };
 openfl_Memory.getFloat = function(addr) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw "Bad address";
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readFloat();
 	});
 };
 openfl_Memory.getI32 = function(addr) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw "Bad address";
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readInt();
 	});
 };
 openfl_Memory.getUI16 = function(addr) {
+	if(addr < 0 || addr + 2 > openfl_Memory.len) throw "Bad address";
 	return openfl_Memory._setPositionTemporarily(addr,function() {
 		return openfl_Memory.gcRef.readUnsignedShort();
 	});
@@ -11266,24 +11285,29 @@ openfl_Memory.select = function(inBytes) {
 	if(inBytes != null) openfl_Memory.len = inBytes.length; else openfl_Memory.len = 0;
 };
 openfl_Memory.setByte = function(addr,v) {
+	if(addr < 0 || addr + 1 > openfl_Memory.len) throw "Bad address";
 	openfl_Memory.gcRef.data.setUint8(addr,v);
 };
 openfl_Memory.setDouble = function(addr,v) {
+	if(addr < 0 || addr + 8 > openfl_Memory.len) throw "Bad address";
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeDouble(v);
 	});
 };
 openfl_Memory.setFloat = function(addr,v) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw "Bad address";
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeFloat(v);
 	});
 };
 openfl_Memory.setI16 = function(addr,v) {
+	if(addr < 0 || addr + 2 > openfl_Memory.len) throw "Bad address";
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeUnsignedShort(v);
 	});
 };
 openfl_Memory.setI32 = function(addr,v) {
+	if(addr < 0 || addr + 4 > openfl_Memory.len) throw "Bad address";
 	openfl_Memory._setPositionTemporarily(addr,function() {
 		openfl_Memory.gcRef.writeInt(v);
 	});
@@ -15488,9 +15512,7 @@ openfl_display_BitmapData.prototype = {
 		while(_g1 < _g) {
 			var i = _g1++;
 			position = i * 4;
-			pixelValue = openfl_Memory._setPositionTemporarily(position,function() {
-				return openfl_Memory.gcRef.readInt();
-			});
+			pixelValue = openfl_Memory.getI32(position);
 			r = pixelValue >> 8 & 255;
 			g = pixelValue >> 16 & 255;
 			b = pixelValue >> 24 & 255;
@@ -15564,9 +15586,7 @@ openfl_display_BitmapData.prototype = {
 				while(_g3 < _g2) {
 					var xx = _g3++;
 					position = (width_yy + xx) * 4;
-					pixelValue = openfl_Memory._setPositionTemporarily(position,function() {
-						return openfl_Memory.gcRef.readInt();
-					});
+					pixelValue = openfl_Memory.getI32(position);
 					pixelMask = pixelValue & mask;
 					i = openfl_display_BitmapData.__ucompare(pixelMask,thresholdMask);
 					test = false;
@@ -15626,9 +15646,7 @@ openfl_display_BitmapData.prototype = {
 				while(_g11 < dw) {
 					var xx1 = _g11++;
 					position1 = (xx1 + sx + (yy1 + sy) * sw) * 4;
-					pixelValue1 = openfl_Memory._setPositionTemporarily(position1,function() {
-						return openfl_Memory.gcRef.readInt();
-					});
+					pixelValue1 = openfl_Memory.getI32(position1);
 					pixelMask1 = pixelValue1 & mask;
 					i1 = openfl_display_BitmapData.__ucompare(pixelMask1,thresholdMask1);
 					test1 = false;
@@ -15636,9 +15654,7 @@ openfl_display_BitmapData.prototype = {
 					if(test1) {
 						openfl_Memory.setI32(position1,color);
 						hits1++;
-					} else if(copySource) openfl_Memory.setI32(position1,openfl_Memory._setPositionTemporarily(canvasMemory + position1,function() {
-						return openfl_Memory.gcRef.readInt();
-					}));
+					} else if(copySource) openfl_Memory.setI32(position1,openfl_Memory.getI32(canvasMemory + position1));
 				}
 			}
 			memory1.position = 0;
@@ -18550,3 +18566,5 @@ openfl_ui_Keyboard.DOM_VK_EXECUTE = 43;
 openfl_ui_Keyboard.DOM_VK_SLEEP = 95;
 ApplicationMain.main();
 })(typeof window != "undefined" ? window : exports);
+
+//# sourceMappingURL=Basics.js.map
