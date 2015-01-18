@@ -1,2 +1,0 @@
- -Dactuate="1.7.5" -Ddesktop="1" -Dhaxe3="1" -Dhaxe_ver="3.103" -DhxDaedalus="0.0.1" -Dhxcpp="3.1.48" -Dhxcpp_api_level="311" -Dlime-legacy="1" -Dlime-native="1" -Dlime_legacy="1" -Dlime_native="1" -Dnative="1" -Dno-compilation="1" -Dno_compilation="1" -Dno_console="1" -Dopenfl="2.1.8" -Dopenfl-native="1" -Dopenfl_native="1" -Dtools="2.0.3" -Dwindows="1"
-C:\HaxeLibrary/hxcpp/3,1,48/
