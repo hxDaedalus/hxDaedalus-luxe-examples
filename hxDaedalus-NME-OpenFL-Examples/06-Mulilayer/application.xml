@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- NMML reference: https://gist.github.com/1763850 -->
+	
+	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+	<meta title="Doune Castle" package="lib.hxDaedalus.examples" version="1.0.0" company="JLM" />
+
+	<!-- output -->
+	<app main="Main" path="bin" file="douneCastle" />
+
+	<!-- window properties -->
+	<window background="#FFFFFF" fps="60" />
+	<window width="985" height="569" unless="mobile" />
+	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+	
+	<set name="SWF_VERSION" value="11.2" />
+	
+	<!-- classpath, haxe libs -->
+	<source path="src" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="hxDaedalus" />
+	
+	<assets path="assets/upper.png" rename="Upper" if="html5" />
+	<assets path="assets/castle.png" rename="Castle" if="html5" />
+	<assets path="assets/lower.png" rename="Lower" if="html5" />
+
+	<!-- optimize output
+	<haxeflag name="-dce full" /> -->
+
+</project>
