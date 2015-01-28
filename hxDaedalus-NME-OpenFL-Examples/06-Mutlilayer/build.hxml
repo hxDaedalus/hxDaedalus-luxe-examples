@@ -1,0 +1,2 @@
+
+-cmd openfl build application.xml flash
