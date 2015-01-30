@@ -94,7 +94,6 @@ class Layer{
 		sampler.entity = entity;
 		sampler.samplingDistance = 5;
 		sampler.path = path;
-
 	
 	}
 	

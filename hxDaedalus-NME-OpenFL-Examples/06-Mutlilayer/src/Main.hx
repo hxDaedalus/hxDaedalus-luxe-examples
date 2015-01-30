@@ -20,10 +20,8 @@ import flash.geom.Matrix;
 import flash.Lib;
 import hxDaedalus.data.math.Point2D;
 
-typedef Portals = {
-	p1: Point2D,
-	p2: Point2D
-}
+import Layer;
+import Interconnect;
 
 @:bitmap("assets/lower.png")
 class Lower extends flash.display.BitmapData {}
@@ -39,15 +37,17 @@ class Main extends Sprite {
 	var bmpLower:Bitmap;
 	var bmpUpper:Bitmap;
 	var overlay: Bitmap;
-	var portals: Array<Portals> = [  	{ p1: new Point2D( 184, 179 ), p2: new Point2D( 702, 180 ) }, 
+	var portals: Array<Portal> = [  	{ p1: new Point2D( 184, 179 ), p2: new Point2D( 702, 180 ) }, 
 					  					{ p1: new Point2D( 274, 179 ), p2: new Point2D( 765, 180 ) },
 					  				  	{ p1: new Point2D( 107, 331 ), p2: new Point2D( 613, 332 ) } ];
+	var interconnect: Interconnect;
     var newPath:Bool = false;
 	var upper: Layer;
 	var lower: Layer;
 	var lowerPos: Point2D = new Point2D(14,30);
 	var upperPos: Point2D = new Point2D(519,29);
 	var start: Point2D = new Point2D( 50, 50 );
+	var end: Point2D = new Point2D( 50, 50 );
 	var drawUpperPath: Bool = false;
 	public static function main(): Void {
 		Lib.current.addChild(new Main());
@@ -86,6 +86,8 @@ class Main extends Sprite {
 		lower = new Layer( this, new Point2D( 50, 50 ),lowerPos, bmpLower );
 		upper = new Layer( this, new Point2D( portals[0].p2.x- upperPos.x, portals[0].p2.y - upperPos.y ), upperPos, bmpUpper );
 		
+		interconnect = new Interconnect( lower, upper, portals );
+		
 		// stamp it on the overlay bitmap
 		//_overlay.bitmapData.draw(viewSpriteLower,_matrixLower );
 		//_overlay.bitmapData.draw(viewSpriteUpper, _matrixUpper );
@@ -118,69 +120,41 @@ class Main extends Sprite {
     
     function _onEnterFrame( event: Event ): Void {
 		if (newPath) {
-			lower.clear();
-			upper.clear();	
-			// stamp it on the overlay bitmap
-			//_overlay.bitmapData.draw(viewSpriteLower,_matrixLower );
-			//_overlay.bitmapData.draw(viewSpriteUpper,_matrixUpper );
-		}
-		
-		if ( newPath ) {
+			interconnect.clear();
 			// find path !
-			var lowerTemp = [];
-			var upperTemp = [];
-			var portal: Portals;
-			var choosenI: Int =0;
-			for ( i in 0...portals.length )
-			{			
-				lower.entitySetPos( start );
-				portal = portals[i];				
-				// reset the path sampler to manage new generated path
-				lower.samplerReset();
-				upper.samplerReset();
-				// check path for each portal
-				lower.findPath( portal.p1.x, portal.p1.y, lowerTemp );
-				upper.entityPosition( portal.p2.x, portal.p2.y );
-				upper.findPath( stage.mouseX, stage.mouseY, upperTemp );			
-				if ( i == 0 )
-				{
-					choosenI = 0;
-					lower.path = lowerTemp.slice( 0 );
-					upper.path = upperTemp.slice( 0 );
-				}
-				else if( (lowerTemp.length + upperTemp.length) < ( lower.path.length + upper.path.length) )
-				{
-					// select shortest overall portal
-					choosenI = i;
-					lower.path = lowerTemp.slice( 0 );
-					upper.path = upperTemp.slice( 0 );
-				}
+			var mX = stage.mouseX;
+			var mY = stage.mouseY;
+			end = new Point2D( mX, mY );
+			if( mX > upperPos.x ){
+				interconnect.findPaths( start, end, lower );
+			} else {
+				
+				interconnect.findPaths( start, end, upper );
 			}
-			//portal = _portals[choosenI];		
-			lower.sampledPathReInit();
-			upper.sampledPathReInit();
 			
-			if ( lower.hasNext() && upper.hasNext() ) {
-				// show path on screen
-				lower.drawPath();
-			}
+			interconnect.firstLayer.drawPath();
         }
 		
         // animate !
-        if ( lower.hasNext() && upper.hasNext() ) {
-			// move lower entity
-            lower.next();     
-			drawUpperPath = true;       
-        } else if ( upper.hasNext() ) {
-			// move upper entity
-			if( drawUpperPath ) upper.drawPath();
-			drawUpperPath = false;
-            upper.next();            
-        }
+        if ( interconnect.hasNext() ){
+			interconnect.next();	
+		} else {
+			start = end;
+		}
 		
-		// show entity position on screen
-		lower.drawEntity();
-		upper.drawEntity();
+		if( interconnect.onFirst ) {
+			// show entity position on screen
+			interconnect.firstLayer.drawEntity();
+			drawUpperPath = true;  
+		} else if( drawUpperPath == true ){
+			interconnect.secondLayer.drawPath();
+			// show entity position on screen
+			interconnect.secondLayer.drawEntity();
+			drawUpperPath = false;
+		} else {
+			interconnect.secondLayer.drawEntity();
+		}
+		
     }
 	
 	function _onKeyDown(event:KeyboardEvent):Void
