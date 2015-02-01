@@ -20,8 +20,6 @@ class Interconnect{
 	public function new( layer1_: Layer, layer2_: Layer, portals_: Array<Portal> ){
 		layer1 = layer1_;
 		layer2 = layer2_;
-		trace( layer1.name );
-		trace( layer2.name );
 		portals = portals_;
 	}
 	
@@ -31,8 +29,6 @@ class Interconnect{
 	}
 	
 	public function findPaths( start: Point2D, end: Point2D, first: Layer ):Void {
-		
-		//trace( start.x + ',' + start.y + ' - ' + end.x + ',' + end.y );
 		var second: Layer;
 		var forward: Bool;
 		if( first == layer1 ){
@@ -48,10 +44,6 @@ class Interconnect{
 		onFirst = true;
 		firstLayer = first;
 		secondLayer = second;
-		
-		//trace( firstLayer.name );
-		//trace( secondLayer.name );
-		
 		var firstTemp = [];
 		var secondTemp = [];
 		var portal: Portal;
@@ -110,15 +102,16 @@ class Interconnect{
 			p1 = choosenPortal.p2;
 			p2 = choosenPortal.p1;
 		}
-		second.entityPosition( p2.x, p2.y );
-		//trace( 'start(' + start.x +','+ start.y + ') lengths of paths ' + first.path.length + ' ' + second.path.length );
-		portalIndex = choosenI;		
-		first.sampledPathReInit();
-		second.sampledPathReInit();
+		portalIndex = choosenI;	
 		first.samplerReset();
 		second.samplerReset();
-		
-		
+		trace( start.x+','+start.y+' | '+p1.x+','+p1.y+' | '+p2.x+','+p2.y+' | '+end.x+','+end.y );
+		first.sampledPathReInit();
+		second.sampledPathReInit();
+		first.entityPosition( start.x, start.y );
+		first.findPath( p1.x, p1.y, first.path );
+		second.entityPosition( p2.x, p2.y );
+		second.findPath( end.x, end.y, second.path );	
 	}
 	
 	public var onFirst: Bool = true;
@@ -147,10 +140,7 @@ class Interconnect{
 	}
 	
 	public function next(){
-		trace( firstLayer.hasNext() );
-		trace( secondLayer.name );
-		if( onFirst ){
-			//trace( 'next' );
+		if( firstLayer.hasNext() ){
 			firstLayer.next();
 		}
 		else

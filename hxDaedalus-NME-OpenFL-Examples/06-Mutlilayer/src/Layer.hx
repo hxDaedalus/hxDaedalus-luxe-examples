@@ -23,7 +23,7 @@ class Layer{
 	public var name: String;
 	var mesh: Mesh;
 	var view: SimpleView;
-	var entity: EntityAI;
+	public var entity: EntityAI;
 	var pathfinder:PathFinder;
 	public var path: Array<Float>;
 	var sampler: LinearPathSampler;
@@ -106,6 +106,10 @@ class Layer{
 		pathfinder.findPath( x_ - pos.x, y_ - pos.y, path_ );
 	}
 	
+	public function findPath0( x_: Float, y_: Float, path_: Array<Float> ){
+		pathfinder.findPath( x_, y_, path_ );
+	}
+	
 	public function samplerReset()
 	{
 		sampler.reset();
@@ -133,6 +137,7 @@ class Layer{
 	public function hasNext(): Bool{
 		return sampler.hasNext;
 	}
+	
 	public function next(){
 		return sampler.next();
 	}

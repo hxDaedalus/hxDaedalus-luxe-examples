@@ -121,7 +121,6 @@ class Main extends Sprite {
 			var mX = stage.mouseX;
 			var mY = stage.mouseY;
 			end = new Point2D( mX, mY );
-			//trace( start.x + ' ' + start.y );
 			if( mX > upperPos.x ){
 				interconnect.findPaths( start, end, lower );
 			} else {
@@ -129,35 +128,33 @@ class Main extends Sprite {
 				interconnect.findPaths( start, end, upper );
 			}
 			interconnect.firstLayer.drawPath();
-        }
-		
-        // animate !
-        if ( interconnect.hasNext() ){
-			interconnect.next();	
 		} else {
-			//trace( 'update end? ' + newPath + ' (' + start.x + ',' + start.y + ') (' + end.x + ',' + end.y + ')' );
-			if( !newPath && ( start.x != end.x || start.y != start.y ) ) 
-			{
-				//trace( 'start (' + start.x + ', ' + start.y + '), end ( ' + end.x + ', ' + end.y + ' )' );
-				start.x = end.x;
-				start.y = end.y;
-				interconnect.resetSamplePath();
+		
+	        // animate !
+	        if ( interconnect.hasNext() ){
+				interconnect.next();	
+			} else {
+				if( !newPath && ( start.x != end.x || start.y != start.y ) ) 
+				{
+					start.x = end.x;
+					start.y = end.y;
+					interconnect.resetSamplePath();
+				}
+			}
+		
+			if( interconnect.firstLayer.hasNext() ) {
+				// show entity position on screen
+				interconnect.firstLayer.drawEntity();
+				drawUpperPath = true;  
+			} else if( drawUpperPath == true ){
+				interconnect.secondLayer.drawPath();
+				// show entity position on screen
+				interconnect.secondLayer.drawEntity();
+				drawUpperPath = false;
+			} else {
+				interconnect.secondLayer.drawEntity();
 			}
 		}
-		
-		if( interconnect.onFirst ) {
-			// show entity position on screen
-			interconnect.firstLayer.drawEntity();
-			drawUpperPath = true;  
-		} else if( drawUpperPath == true ){
-			interconnect.secondLayer.drawPath();
-			// show entity position on screen
-			interconnect.secondLayer.drawEntity();
-			drawUpperPath = false;
-		} else {
-			interconnect.secondLayer.drawEntity();
-		}
-		
     }
 	
 	function _onKeyDown(event:KeyboardEvent):Void
