@@ -1,4 +1,5 @@
 
--cmd openfl build application.xml flash
+-cmd openfl build application.xml html5
 --next
--cmd open bin/flash/bin/douneCastle.swf
+#-cmd open bin/flash/bin/douneCastle.swf
+-cmd open bin/html5/bin/lib/index.html
