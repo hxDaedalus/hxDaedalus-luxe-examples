@@ -20,7 +20,7 @@ import flash.geom.Matrix;
 import hxDaedalus.data.math.Point2D;
 
 class Layer{
-
+	public var name: String;
 	var mesh: Mesh;
 	var view: SimpleView;
 	var entity: EntityAI;
@@ -34,8 +34,9 @@ class Layer{
 	var pos: Point2D;
 	var entityPos: Point2D;
 	
-	public function new( scope: Sprite,  entityPos: Point2D,pos_: Point2D, bmp_: Bitmap ){
+	public function new( scope: Sprite,  entityPos: Point2D,pos_: Point2D, bmp_: Bitmap, name_: String = '' ){
 		
+		name = name_;
 		pos = pos_;
 		bmp = bmp_;
 		

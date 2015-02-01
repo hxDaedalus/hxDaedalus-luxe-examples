@@ -83,14 +83,10 @@ class Main extends Sprite {
 		bmpUpper.y = 0;// 29;
 		//702 - _upperPos.x;
 		
-		lower = new Layer( this, new Point2D( 50, 50 ),lowerPos, bmpLower );
-		upper = new Layer( this, new Point2D( portals[0].p2.x- upperPos.x, portals[0].p2.y - upperPos.y ), upperPos, bmpUpper );
+		lower = new Layer( this, new Point2D( 50, 50 ),lowerPos, bmpLower,'ground' );
+		upper = new Layer( this, new Point2D( portals[0].p2.x- upperPos.x, portals[0].p2.y - upperPos.y ), upperPos, bmpUpper, 'first floor' );
 		
 		interconnect = new Interconnect( lower, upper, portals );
-		
-		// stamp it on the overlay bitmap
-		//_overlay.bitmapData.draw(viewSpriteLower,_matrixLower );
-		//_overlay.bitmapData.draw(viewSpriteUpper, _matrixUpper );
 		
 		var s = haxe.Timer.stamp();
 		
@@ -125,13 +121,13 @@ class Main extends Sprite {
 			var mX = stage.mouseX;
 			var mY = stage.mouseY;
 			end = new Point2D( mX, mY );
+			//trace( start.x + ' ' + start.y );
 			if( mX > upperPos.x ){
 				interconnect.findPaths( start, end, lower );
 			} else {
 				
 				interconnect.findPaths( start, end, upper );
 			}
-			
 			interconnect.firstLayer.drawPath();
         }
 		
@@ -139,7 +135,14 @@ class Main extends Sprite {
         if ( interconnect.hasNext() ){
 			interconnect.next();	
 		} else {
-			start = end;
+			//trace( 'update end? ' + newPath + ' (' + start.x + ',' + start.y + ') (' + end.x + ',' + end.y + ')' );
+			if( !newPath && ( start.x != end.x || start.y != start.y ) ) 
+			{
+				//trace( 'start (' + start.x + ', ' + start.y + '), end ( ' + end.x + ', ' + end.y + ' )' );
+				start.x = end.x;
+				start.y = end.y;
+				interconnect.resetSamplePath();
+			}
 		}
 		
 		if( interconnect.onFirst ) {
