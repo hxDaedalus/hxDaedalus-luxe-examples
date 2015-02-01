@@ -34,12 +34,20 @@ class Layer{
 	var viewSprite: Sprite;
 	var pos: Point2D;
 	var entityPos: Point2D;
-	
+	var w: Float;
+	var h: Float;
+	var right: Float;
+	var bottom: Float;
 	public function new( scope: Sprite,  entityPos: Point2D,pos_: Point2D, bmp_: Bitmap, name_: String = '' ){
 		
 		name = name_;
 		pos = pos_;
 		bmp = bmp_;
+		
+		w = bmp.width;
+		h = bmp.height;
+		right = pos.x + w;
+		bottom = pos.y + h;
 		
 		// build a rectangular 2 polygons mesh
 		mesh = RectMesh.buildRectangle( bmp.width, bmp.height );
@@ -99,6 +107,10 @@ class Layer{
 	
 	}
 	
+	public function hitTest( x_: Float, y_: Float ){
+		return ( x_ > pos.x && y_ > pos.y && x_ < right && y_ < bottom );
+	}
+	
 	public function drawEntityFalse(){
 		view.drawEntity( entity, false );
 		view.drawEntity( secondEntity, false );
@@ -111,24 +123,10 @@ class Layer{
 	public function findPath( x_: Float, y_: Float, path_: Array<Float> ){
 		pathfinder.findPath( x_ - pos.x, y_ - pos.y, path_ );
 	}
-	
-	public function findPath0( x_: Float, y_: Float, path_: Array<Float> ){
-		pathfinder.findPath( x_, y_, path_ );
-	}
-	
+
 	public function samplerReset()
 	{
 		sampler.reset();
-	}
-	
-	public function entitySetPos( p: Point2D ){
-		entity.x = p.x;
-		entity.y = p.y;
-	}
-	
-	public function entityPosition0( x_: Float, y_: Float ){
-		entity.x = x_;
-		entity.y = y_;
 	}
 	
 	public function entityPosition( x_: Float, y_: Float ){

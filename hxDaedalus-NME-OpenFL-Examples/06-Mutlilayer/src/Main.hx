@@ -22,6 +22,8 @@ import hxDaedalus.data.math.Point2D;
 
 import Layer;
 import Interconnect;
+import WithinLayer;
+
 
 @:bitmap("assets/lower.png")
 class Lower extends flash.display.BitmapData {}
@@ -49,6 +51,12 @@ class Main extends Sprite {
 	var start: Point2D = new Point2D( 50, 50 );
 	var end: Point2D = new Point2D( 50, 50 );
 	var drawUpperPath: Bool = false;
+	var lastHitLayer: Layer = null;
+	var twoLayers: Bool;
+	var withinLayer: WithinLayer;
+	var betweenLayer: BetweenLayer;
+	var enableAnimate: Bool = false;
+	
 	public static function main(): Void {
 		Lib.current.addChild(new Main());
 	}
@@ -87,77 +95,84 @@ class Main extends Sprite {
 		upper = new Layer( this, new Point2D( portals[0].p2.x- upperPos.x, portals[0].p2.y - upperPos.y ), upperPos, bmpUpper, 'first floor' );
 		
 		interconnect = new Interconnect( lower, upper, portals );
+		withinLayer = new WithinLayer();
+		betweenLayer = new BetweenLayer( interconnect );
+		
 		
 		var s = haxe.Timer.stamp();
 		
 		var stage = Lib.current.stage;
 		// click/drag
-		stage.addEventListener(MouseEvent.MOUSE_DOWN, _onMouseDown);
-		stage.addEventListener(MouseEvent.MOUSE_UP, _onMouseUp);
+		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		
 		// animate
-		stage.addEventListener(Event.ENTER_FRAME, _onEnterFrame);
+		stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		
 		// key presses
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		//var fps = new openfl.display.FPS();
 		//Lib.current.stage.addChild(fps);
 		/**/
 	}
 	
-    function _onMouseUp( event: MouseEvent ): Void {
+    function onMouseUp( event: MouseEvent ): Void {
 		newPath = false;
     }
     
-    function _onMouseDown( event: MouseEvent ): Void {
-        newPath = true;
+	
+    function onMouseDown( event: MouseEvent ): Void {
+		// find path !
+		var mX = stage.mouseX;
+		var mY = stage.mouseY;
+		end = new Point2D( mX, mY );
+		var isLowerHit = lower.hitTest( mX, mY );
+		var isUpperHit = upper.hitTest( mX, mY );
+		interconnect.clear();
+		if( isLowerHit && lower != lastHitLayer ){
+			lastHitLayer = lower;
+			twoLayers = true;
+			betweenLayer.setup( start, end, upper );
+			enableAnimate = true;
+		} else if( isUpperHit && upper != lastHitLayer ){
+			lastHitLayer = upper;
+			twoLayers = true;
+			betweenLayer.setup( start, end, lower );
+			enableAnimate = true;
+		} else {
+			twoLayers = false;
+			if( isUpperHit )
+			{
+				lastHitLayer = upper;
+				withinLayer.setup( mX, mY, upper );
+				enableAnimate = true;
+			} else if( isLowerHit ){
+				lastHitLayer = lower;
+				withinLayer.setup( mX, mY, lower );
+				enableAnimate = true;
+			} else{
+				enableAnimate = false;
+				return;
+			}
+		}
+		newPath = true;
     }
     
-    function _onEnterFrame( event: Event ): Void {
-		if (newPath) {
-			interconnect.clear();
-			// find path !
-			var mX = stage.mouseX;
-			var mY = stage.mouseY;
-			end = new Point2D( mX, mY );
-			if( mX > upperPos.x ){
-				interconnect.findPaths( start, end, lower );
-			} else {
-				
-				interconnect.findPaths( start, end, upper );
-			}
-			interconnect.firstLayer.drawPath();
-		} else {
+    function onEnterFrame( event: Event ): Void {
 		
-	        // animate !
-	        if ( interconnect.hasNext() ){
-				interconnect.next();	
+		if (!newPath && enableAnimate ) {
+			if( twoLayers = true ){
+		        // animate !
+				betweenLayer.animate();
 			} else {
-				if( !newPath && ( start.x != end.x || start.y != start.y ) ) 
-				{
-					start.x = end.x;
-					start.y = end.y;
-					interconnect.resetSamplePath();
-				}
-			}
-		
-			if( interconnect.firstLayer.hasNext() ) {
-				// show entity position on screen
-				interconnect.firstLayer.drawEntity();
-				drawUpperPath = true;  
-			} else if( drawUpperPath == true ){
-				interconnect.secondLayer.drawPath();
-				// show entity position on screen
-				interconnect.secondLayer.drawEntity();
-				drawUpperPath = false;
-			} else {
-				interconnect.secondLayer.drawEntity();
+		        // animate !
+		        withinLayer.animate();
 			}
 		}
     }
 	
-	function _onKeyDown(event:KeyboardEvent):Void
+	function onKeyDown(event:KeyboardEvent):Void
 	{
 		if (event.keyCode == 27) {  // ESC
 			#if flash

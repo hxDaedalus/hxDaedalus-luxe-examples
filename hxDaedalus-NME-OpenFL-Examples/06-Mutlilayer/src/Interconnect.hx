@@ -42,9 +42,6 @@ class Interconnect{
 		lastEndY = end.y;
 		lastLayer = first;
 		
-		// temporary potection require alternating Layer at moment.
-		//if( first == lastLayer ) return;
-		
 		var second: Layer;
 		var forward: Bool;
 		if( first == layer1 ){
@@ -100,8 +97,13 @@ class Interconnect{
 				choosenI = 0;
 				first.path = firstTemp.slice( 0 );
 				second.path = secondTemp.slice( 0 );
+				// if endtarget cannot be obtained
+				if( secondTemp.length == 0 ){
+					first.path = [];
+					second.path = [];	
+				} 
 			}
-			else if( (firstTemp.length + secondTemp.length) < ( first.path.length + second.path.length) && first.path.length != 0 )
+			else if( (firstTemp.length + secondTemp.length) < ( first.path.length + second.path.length) && firstTemp.length != 0 )
 			{
 				// select shortest overall portal
 				choosenI = i;
@@ -118,23 +120,10 @@ class Interconnect{
 			p1 = choosenPortal.p2;
 			p2 = choosenPortal.p1;
 		}
-		portalIndex = choosenI;		
-		first.entityPosition0(start.x, start.y);
-		second.entityPosition( p2.x, p2.y );		
-		first.entitySecondPosition( p1.x, p1.y );
-		first.drawEntityFalse();
-		second.drawEntityFalse();
-		//first.path = [];
-		first.samplerReset();
-		second.samplerReset();
+		portalIndex = choosenI;	
 		first.sampledPathReInit();
 		second.sampledPathReInit();
-
-		first.findPath(p1.x, p1.y ,  first.path );
-		second.findPath( end.x, end.y, second.path );	
-		first.sampledPathReInit();
-		second.sampledPathReInit();
-		trace( start.x+','+start.y+' | '+p1.x+','+p1.y+' | '+p2.x+','+p2.y+' | '+end.x+','+end.y + ' first len ' + first.path.length );
+		
 	}
 	
 	public var onFirst: Bool = true;
@@ -150,8 +139,6 @@ class Interconnect{
 	public function resetSamplePath():Void {
 		firstLayer.sampledPathReInit();
 		secondLayer.sampledPathReInit();
-		//firstLayer.path = null;
-		//secondLayer.path = null;	
 	}
 	
 	public function hasFirstNext():Bool {
