@@ -109,8 +109,12 @@ class Interconnect{
 		first.sampledPathReInit();
 		second.sampledPathReInit();
 		first.entityPosition( start.x, start.y );
+		first.drawEntityFalse();
+		first.entitySecondPosition( p1.x, p1.y );
 		first.findPath( p1.x, p1.y, first.path );
 		second.entityPosition( p2.x, p2.y );
+		second.drawEntityFalse();
+		second.entitySecondPosition( end.x, end.y );
 		second.findPath( end.x, end.y, second.path );	
 	}
 	

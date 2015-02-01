@@ -24,6 +24,7 @@ class Layer{
 	var mesh: Mesh;
 	var view: SimpleView;
 	public var entity: EntityAI;
+	public var secondEntity: EntityAI;
 	var pathfinder:PathFinder;
 	public var path: Array<Float>;
 	var sampler: LinearPathSampler;
@@ -71,14 +72,14 @@ class Layer{
 		
 		// we need an entity
 		entity = new EntityAI();
-		
+		secondEntity = new EntityAI();
 		// set radius size for your entity
 		entity.radius = 2;
-		
+		secondEntity.radius = 4;
 		// set a position
 		entity.x = entityPos.x;
 		entity.y = entityPos.y;
-
+		
 		// show entity on screen
 		view.drawEntity( entity, false );
 		
@@ -96,6 +97,11 @@ class Layer{
 		sampler.samplingDistance = 5;
 		sampler.path = path;
 	
+	}
+	
+	public function drawEntityFalse(){
+		view.drawEntity( entity, false );
+		view.drawEntity( secondEntity, false );
 	}
 	
 	public function sampledPathReInit(){
@@ -124,6 +130,12 @@ class Layer{
 	{
 		entity.x = x_ - pos.x;
 		entity.y = y_ - pos.y;
+	}
+	
+	public function entitySecondPosition( x_: Float, y_: Float )
+	{
+		secondEntity.x = x_ - pos.x;
+		secondEntity.y = y_ - pos.y;
 	}
 	
 	public function clear(){
