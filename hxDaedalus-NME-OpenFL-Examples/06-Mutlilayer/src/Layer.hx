@@ -126,14 +126,17 @@ class Layer{
 		entity.y = p.y;
 	}
 	
-	public function entityPosition( x_: Float, y_: Float )
-	{
+	public function entityPosition0( x_: Float, y_: Float ){
+		entity.x = x_;
+		entity.y = y_;
+	}
+	
+	public function entityPosition( x_: Float, y_: Float ){
 		entity.x = x_ - pos.x;
 		entity.y = y_ - pos.y;
 	}
 	
-	public function entitySecondPosition( x_: Float, y_: Float )
-	{
+	public function entitySecondPosition( x_: Float, y_: Float ){
 		secondEntity.x = x_ - pos.x;
 		secondEntity.y = y_ - pos.y;
 	}

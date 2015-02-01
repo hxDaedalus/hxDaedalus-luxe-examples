@@ -16,6 +16,11 @@ class Interconnect{
 	public var portalIndex: Int;
 	public var firstLayer: Layer;
 	public var secondLayer: Layer;
+	public var lastStartX: Float = -1;
+	public var lastStartY: Float = -1;
+	public var lastEndX: Float = -1;
+	public var lastEndY: Float = -1;
+	public var lastLayer: Layer = null;
 	
 	public function new( layer1_: Layer, layer2_: Layer, portals_: Array<Portal> ){
 		layer1 = layer1_;
@@ -29,6 +34,17 @@ class Interconnect{
 	}
 	
 	public function findPaths( start: Point2D, end: Point2D, first: Layer ):Void {
+		
+		if( start.x == lastStartX && start.y == lastStartY && end.x == lastEndX && end.y == lastEndY && first == lastLayer ) return;
+		lastStartX = start.x;
+		lastStartY = start.y;
+		lastEndX = end.x;
+		lastEndY = end.y;
+		lastLayer = first;
+		
+		// temporary potection require alternating Layer at moment.
+		//if( first == lastLayer ) return;
+		
 		var second: Layer;
 		var forward: Bool;
 		if( first == layer1 ){
@@ -78,14 +94,14 @@ class Interconnect{
 			// check path for each portal
 			first.findPath( p1.x, p1.y, firstTemp );
 			second.entityPosition( p2.x, p2.y );
-			second.findPath( end.x, end.y, secondTemp );			
+			second.findPath( end.x, end.y, secondTemp );		
 			if ( i == 0 )
 			{
 				choosenI = 0;
 				first.path = firstTemp.slice( 0 );
 				second.path = secondTemp.slice( 0 );
 			}
-			else if( (firstTemp.length + secondTemp.length) < ( first.path.length + second.path.length) )
+			else if( (firstTemp.length + secondTemp.length) < ( first.path.length + second.path.length) && first.path.length != 0 )
 			{
 				// select shortest overall portal
 				choosenI = i;
@@ -102,20 +118,23 @@ class Interconnect{
 			p1 = choosenPortal.p2;
 			p2 = choosenPortal.p1;
 		}
-		portalIndex = choosenI;	
+		portalIndex = choosenI;		
+		first.entityPosition0(start.x, start.y);
+		second.entityPosition( p2.x, p2.y );		
+		first.entitySecondPosition( p1.x, p1.y );
+		first.drawEntityFalse();
+		second.drawEntityFalse();
+		//first.path = [];
 		first.samplerReset();
 		second.samplerReset();
-		trace( start.x+','+start.y+' | '+p1.x+','+p1.y+' | '+p2.x+','+p2.y+' | '+end.x+','+end.y );
 		first.sampledPathReInit();
 		second.sampledPathReInit();
-		first.entityPosition( start.x, start.y );
-		first.drawEntityFalse();
-		first.entitySecondPosition( p1.x, p1.y );
-		first.findPath( p1.x, p1.y, first.path );
-		second.entityPosition( p2.x, p2.y );
-		second.drawEntityFalse();
-		second.entitySecondPosition( end.x, end.y );
+
+		first.findPath(p1.x, p1.y ,  first.path );
 		second.findPath( end.x, end.y, second.path );	
+		first.sampledPathReInit();
+		second.sampledPathReInit();
+		trace( start.x+','+start.y+' | '+p1.x+','+p1.y+' | '+p2.x+','+p2.y+' | '+end.x+','+end.y + ' first len ' + first.path.length );
 	}
 	
 	public var onFirst: Bool = true;
@@ -131,8 +150,8 @@ class Interconnect{
 	public function resetSamplePath():Void {
 		firstLayer.sampledPathReInit();
 		secondLayer.sampledPathReInit();
-		firstLayer.path = null;
-		secondLayer.path = null;	
+		//firstLayer.path = null;
+		//secondLayer.path = null;	
 	}
 	
 	public function hasFirstNext():Bool {
