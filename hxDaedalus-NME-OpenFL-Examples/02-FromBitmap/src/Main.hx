@@ -31,15 +31,21 @@ class Main extends Sprite
     {
         super();
         
+		// load image (async for html5)
+    #if html5
+        _bmp = new Bitmap(new TestImage(0, 0, onLoaded));
+    #else		
+        _bmp = new Bitmap(new TestImage(0, 0));
+		onLoaded();
+	#end
+	}
+	
+	public function onLoaded()
+	{
         // build a rectangular 2 polygons mesh of 600x600
         _mesh = RectMesh.buildRectangle( 600, 600 );
         
         // show the source bmp
-    #if html5	// load as openfl asset: see application.xml
-        _bmp = new Bitmap(openfl.Assets.getBitmapData("TestImage"));		
-    #else		
-        _bmp = new Bitmap(new TestImage(0, 0));		
-	#end
 		_bmp.x = 110;
         _bmp.y = 220;
         addChild( _bmp );
