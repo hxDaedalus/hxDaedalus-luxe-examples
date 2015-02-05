@@ -21,8 +21,6 @@
 	<haxelib name="openfl" />
 	<haxelib name="hxDaedalus" />
 	
-	<assets path="assets/FromBitmap.png" rename="TestImage" if="html5" />
-	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
 

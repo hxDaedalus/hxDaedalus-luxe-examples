@@ -21,8 +21,7 @@
 	<haxelib name="openfl" />
 	<haxelib name="hxDaedalus" />
 	
-	<assets path="assets/galapagosBW.png" rename="GalapagosBW" if="html5" />
-	<assets path="assets/galapagosColor.png" rename="GalapagosColor" if="html5" />
+	<assets path="assets/galapagosColor.png" rename="GalapagosColor" embed="true" />
 
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
