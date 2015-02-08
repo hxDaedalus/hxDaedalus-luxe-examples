@@ -20,8 +20,6 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="hxDaedalus" />
-	
-	<assets path="assets/galapagosColor.png" rename="GalapagosColor" embed="true" />
 
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

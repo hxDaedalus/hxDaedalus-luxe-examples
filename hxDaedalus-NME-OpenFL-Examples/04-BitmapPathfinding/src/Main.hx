@@ -21,6 +21,9 @@ import flash.Lib;
 @:bitmap("assets/galapagosBW.png")
 class GalapagosBW extends flash.display.BitmapData {}
 
+@:bitmap("assets/galapagosColor.png")
+class GalapagosColor extends flash.display.BitmapData {}
+
 class Main extends Sprite {
 
 	var _mesh:  Mesh;
@@ -44,9 +47,11 @@ class Main extends Sprite {
 		
 		// load image (async for html5)
     #if html5
-        _bmp = new Bitmap(new GalapagosBW(0, 0, onLoaded));
+        _bmp = new Bitmap(new GalapagosBW(0, 0));
+        _overlay = new Bitmap(new GalapagosColor(0, 0, onLoaded));
     #else		
         _bmp = new Bitmap(new GalapagosBW(0, 0));
+        _overlay = new Bitmap(new GalapagosColor(0, 0));
 		onLoaded();
 	#end
 	}
@@ -57,10 +62,6 @@ class Main extends Sprite {
 		_mesh = RectMesh.buildRectangle( 1024, 780 );
 		
 		// show the image bmp
-		// load as openfl asset: see application.xml
-        _overlay = new Bitmap(openfl.Assets.getBitmapData("GalapagosColor"));
-		_overlay.x = 0;
-		_overlay.y = 0;
 		addChild(_overlay);
 		
 		var viewSprite = new Sprite();
