@@ -16,7 +16,7 @@ You can view some of the examples:
  [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/01-Basics/bin/html5/bin/index.html) | 
  [android](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/01-Basics/bin/android/bin/bin/Basics-debug.apk)
  - 02-FromBitmap: [flash](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/02-FromBitmap/bin/flash/bin/FromBitmap.swf) | 
- [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/02-FromBitmap/bin/html5/bin/index.html)
+ [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/02-FromBitmap/bin/html5/bin/index.html) | 
  [android](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/02-FromBitmap/bin/android/bin/bin/FromBitmap-debug.apk)
  - 03-Pathfinding: [flash](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/03-Pathfinding/bin/flash/bin/Pathfinding.swf) | 
  [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/03-Pathfinding/bin/html5/bin/index.html) | 
