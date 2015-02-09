@@ -20,89 +20,75 @@ import flash.geom.Matrix;
 import flash.Lib;
 import hxDaedalus.data.math.Point2D;
 
+// polygonal
+import de.polygonal.ds.DA;
+import de.polygonal.ds.Graph;
+import de.polygonal.ds.GraphNode;
+import de.polygonal.ai.pathfinding.AStar;
+import de.polygonal.ai.pathfinding.AStarWaypoint;
+
+import PortalWaypoint;
 import Layer;
-import Interconnect;
-import WithinLayer;
-
-
-@:bitmap("assets/lower.png")
-class Lower extends flash.display.BitmapData {}
-
-@:bitmap("assets/upper.png")
-class Upper extends flash.display.BitmapData {}
-
-@:bitmap("assets/castle.png")
-class Castle extends flash.display.BitmapData {}
+import MultiLayerData;
+import SubGraph;
 
 class Main extends Sprite {
 	
-	var bmpLower:Bitmap;
-	var bmpUpper:Bitmap;
-	var overlay: Bitmap;
-	var portals: Array<Portal> = [  	{ p1: new Point2D( 184, 179 ), p2: new Point2D( 702, 180 ) }, 
-					  					{ p1: new Point2D( 274, 179 ), p2: new Point2D( 765, 180 ) },
-					  				  	{ p1: new Point2D( 107, 331 ), p2: new Point2D( 613, 332 ) } ];
-	var interconnect: Interconnect;
+	//var interconnect: Interconnect;
     var newPath:Bool = false;
-	var upper: Layer;
-	var lower: Layer;
-	var lowerPos: Point2D = new Point2D(14,30);
-	var upperPos: Point2D = new Point2D(519,29);
-	var start: Point2D = new Point2D( 50, 50 );
-	var end: Point2D = new Point2D( 50, 50 );
-	var drawUpperPath: Bool = false;
-	var lastHitLayer: Layer = null;
-	var twoLayers: Bool;
-	var withinLayer: WithinLayer;
-	var betweenLayer: BetweenLayer;
-	var enableAnimate: Bool = false;
+	var graph: Graph<AStarWaypoint>;
+	var aStar: AStar;
+	var data: MultiLayerData;
+	var layers: Array<Layer> = new Array<Layer>();
+	var subLayers: Array<SubGraph> = new Array<SubGraph>();
+	var path: DA<AStarWaypoint>;
+	var renderPathIterator: RenderPathIterator;
 	
 	public static function main(): Void {
 		Lib.current.addChild(new Main());
 	}
-
+	
 	public function new() {
 		super();
 		
-		// show the image bmp
-    #if html5	// load as openfl asset: see application.xml
-        overlay = new Bitmap(openfl.Assets.getBitmapData("Castle"));
-    #else		
-        overlay = new Bitmap(new Castle(0, 0));	
-	#end
-		overlay.x = 0;
-		overlay.y = 0;
-		overlay.alpha = 0.3;
-		addChild(overlay);
+		graph = new Graph<AStarWaypoint>();
+		aStar = new AStar(graph);
+		data = new MultiLayerData();
 		
+		var subGraphs = new Array<SubGraph>();
+		var layerNames = ['left layer','top layer','right layer','bottom left','bottom right' ];
+		var layer: Layer;
+		var subGraph: SubGraph;
 		
-		// show the source bmp
-    #if html5	// load as openfl asset: see application.xml
-        bmpLower = new Bitmap(openfl.Assets.getBitmapData("Lower"));
-		bmpUpper= new Bitmap(openfl.Assets.getBitmapData("Upper"));
+		for( i in 0...data.bmps.length ){
+			layer = new Layer( this, data.pos[i], data.bmps[i], layerNames[i] );
+			layers.push( layer );
+			subGraph = new SubGraph( graph, layer );
+			subGraph.portals = data.portals[i];
+			subGraph.addPortalPairs();
+			subGraphs.push(subGraph);
+		}
 		
-    #else		
-        bmpLower = new Bitmap(new Lower(0, 0));
-		bmpUpper = new Bitmap(new Upper(0, 0));
-	#end
-		bmpLower.x = 0;// 14;
-		bmpLower.y = 0;// 30;
-		bmpUpper.x = 0;// 519;
-		bmpUpper.y = 0;// 29;
-		//702 - _upperPos.x;
+		var node0: GraphNode<AStarWaypoint>;
+		var node1: GraphNode<AStarWaypoint>;
+		for( wp in data.connections ){
+			node0 = subGraphs[wp[0]].portalWaypoints[wp[1]].node;
+			node1 = subGraphs[wp[2]].portalWaypoints[wp[3]].node;
+			graph.addMutualArc( node0, node1, 1000 ); 
+		}
 		
-		lower = new Layer( this, new Point2D( 50, 50 ),lowerPos, bmpLower,'ground' );
-		upper = new Layer( this, new Point2D( portals[0].p2.x- upperPos.x, portals[0].p2.y - upperPos.y ), upperPos, bmpUpper, 'first floor' );
+		path = new DA<AStarWaypoint>();
+		var start = subGraphs[4].portalWaypoints[3];
+		var end = subGraphs[0].portalWaypoints[0];
 		
-		interconnect = new Interconnect( lower, upper, portals );
-		withinLayer = new WithinLayer();
-		betweenLayer = new BetweenLayer( interconnect );
+		var pathExists = aStar.find( graph, start, end, path );
 		
+		renderPathIterator = new RenderPathIterator( path, removeEf );
 		
 		var s = haxe.Timer.stamp();
 		
 		var stage = Lib.current.stage;
-		// click/drag
+		
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		
@@ -117,60 +103,28 @@ class Main extends Sprite {
 		/**/
 	}
 	
+	public function removeEf(){
+		stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	
+    function onEnterFrame( event: Event ): Void {
+		renderPathIterator.animate();
+    }
+	
     function onMouseUp( event: MouseEvent ): Void {
 		newPath = false;
     }
     
 	
     function onMouseDown( event: MouseEvent ): Void {
-		// find path !
 		var mX = stage.mouseX;
 		var mY = stage.mouseY;
-		end = new Point2D( mX, mY );
-		var isLowerHit = lower.hitTest( mX, mY );
-		var isUpperHit = upper.hitTest( mX, mY );
-		interconnect.clear();
-		if( isLowerHit && lower != lastHitLayer ){
-			lastHitLayer = lower;
-			twoLayers = true;
-			betweenLayer.setup( start, end, upper );
-			enableAnimate = true;
-		} else if( isUpperHit && upper != lastHitLayer ){
-			lastHitLayer = upper;
-			twoLayers = true;
-			betweenLayer.setup( start, end, lower );
-			enableAnimate = true;
-		} else {
-			twoLayers = false;
-			if( isUpperHit )
-			{
-				lastHitLayer = upper;
-				withinLayer.setup( mX, mY, upper );
-				enableAnimate = true;
-			} else if( isLowerHit ){
-				lastHitLayer = lower;
-				withinLayer.setup( mX, mY, lower );
-				enableAnimate = true;
-			} else{
-				enableAnimate = false;
-				return;
-			}
-		}
+		var end = new Point2D( mX, mY );	
+		//layer.hitTest( mX, mY );
+		// create a PortalWaypoint
 		newPath = true;
     }
     
-    function onEnterFrame( event: Event ): Void {
-		
-		if (!newPath && enableAnimate ) {
-			if( twoLayers = true ){
-		        // animate !
-				betweenLayer.animate();
-			} else {
-		        // animate !
-		        withinLayer.animate();
-			}
-		}
-    }
 	
 	function onKeyDown(event:KeyboardEvent):Void
 	{

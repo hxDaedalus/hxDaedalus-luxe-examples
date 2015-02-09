@@ -9,8 +9,8 @@
 	<app main="Main" path="bin" file="douneCastle" />
 
 	<!-- window properties -->
-	<window background="#FFFFFF" fps="60" />
-	<window width="985" height="569" unless="mobile" />
+	<window background="#333333" fps="60" />
+	<window width="1024" height="780" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<set name="SWF_VERSION" value="11.2" />
@@ -20,10 +20,13 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="hxDaedalus" />
-	
-	<assets path="assets/upper.png" rename="Upper" if="html5" />
-	<assets path="assets/castle.png" rename="Castle" if="html5" />
-	<assets path="assets/lower.png" rename="Lower" if="html5" />
+	<haxelib name="polygonal-ds" />
+	<haxelib name="polygonal-ai" />
+	<assets path="assets/randomHitMesh0_256.gif" rename="Bm0" if="html5" />
+	<assets path="assets/randomHitMesh1_256.gif" rename="Bm1" if="html5" />
+	<assets path="assets/randomHitMesh2_256.gif" rename="Bm2" if="html5" />
+	<assets path="assets/randomHitMesh3_256.gif" rename="Bm3" if="html5" />
+	<assets path="assets/randomHitMesh4_256.gif" rename="Bm4" if="html5" />
 
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
