@@ -11,46 +11,42 @@ import Layer;
 import MultiLayerData;
 import SubGraph;
 
-class SubGraph
-{
+class SubGraph {
 	public var portals: Array<{x:Float,y:Float}>;
 	public var portalWaypoints: Array<PortalWaypoint>;
-	public var graph: Graph<AStarWaypoint>;
 	public var layer: Layer;
-	public var internalPortal: {x:Float,y:Float};
-	public var meshWaypointPortal: PortalWaypoint;
+	var dynamicWaypoints: Array<PortalWaypoint>;
+	var graph: Graph<AStarWaypoint>;
 	
 	public function new( graph_: Graph<AStarWaypoint>, layer_: Layer ){
 		graph = graph_;
 		layer = layer_;
 		portalWaypoints = new Array<PortalWaypoint>();
+		dynamicWaypoints = new Array<PortalWaypoint>();
 	}
 	
 	public function addPortalPairs(){
-		// add mesh portal nodes to the graph
-		for( i in 0...portals.length ){
+		for( i in 0...portals.length ){	// add mesh portal nodes to the graph
 			var pwp = new PortalWaypoint();
 			pwp.portal = portals[i];
 			pwp.layer = layer;
-			pwp.node = graph.addNode(graph.createNode(pwp));
+			pwp.node = graph.addNode( graph.createNode( pwp ) );
 			portalWaypoints.push( pwp );
 		}
-		
-		var possSeconds: Array<PortalWaypoint> = portalWaypoints.slice(0);
-		var first: PortalWaypoint;//AStarWaypoint
+		var possSeconds: Array<PortalWaypoint> = portalWaypoints.slice( 0 );
+		var first: PortalWaypoint;
 		var second: PortalWaypoint;
 		var firstWp: AStarWaypoint;
 		var secondWp: AStarWaypoint;
 		var len: Int;
 		var count: Int = 0;
-		// create arc's between portals with cost based on mesh path lengths
-		while( possSeconds.length > 0 ){
+		while( possSeconds.length > 0 ){ // create arc's between portals with cost based on mesh path lengths
 			first = possSeconds.pop();
 			firstWp = first;
 			for( i in 0...possSeconds.length ){
-				second = possSeconds[i];
+				second = possSeconds[ i ];
 				len = layer.findPathNodeLength( first.portal, second.portal );
-				if( len == 0 ) trace( 'portal connection failed ' + i + ' ' + ( count+i ) );
+				if( len == 0 ) trace( 'portal connection failed ' + i + ' ' + ( count + i ) );
 				secondWp = second;
 				if( len != 0 ) graph.addMutualArc( firstWp.node, secondWp.node, len ); 
 			}
@@ -58,30 +54,28 @@ class SubGraph
 		}
 	}
 	
-	public function addMeshPoint( internalPortal_: { x: Float, y: Float } ){
-		//removeMeshPoint();
-		internalPortal = internalPortal_;			
-		meshWaypointPortal = new PortalWaypoint();
-		meshWaypointPortal.layer = layer;
-		meshWaypointPortal.portal = internalPortal_;
-		meshWaypointPortal.node = graph.addNode(graph.createNode(meshWaypointPortal));
+	public function addMeshPoint( dynamicPortal_: { x: Float, y: Float } ){		
+		var wp = new PortalWaypoint();
+		wp.layer = layer;
+		wp.portal = dynamicPortal_;
+		wp.node = graph.addNode( graph.createNode( wp ) );
 		var len: Int;
 		for( pw in portalWaypoints ){
-			//trace( 'adding points' );
-			len = layer.findPathNodeLength( internalPortal_, pw.portal );
+			len = layer.findPathNodeLength( dynamicPortal_, pw.portal );
 			if( len == 0 ) trace( 'portal connection failed ');
-			if( len != 0 ) graph.addMutualArc( meshWaypointPortal.node, pw.node, len );
+			if( len != 0 ) graph.addMutualArc( wp.node, pw.node, len );
 		}
-		portalWaypoints.push(meshWaypointPortal);
-		return meshWaypointPortal;
+		dynamicWaypoints.push( wp );
+		portalWaypoints.push( wp );
+		return wp;
 	}
 	
 	public function removeMeshPoint(){
-		if( meshWaypointPortal != null ) 
-		{
-			var wp: AStarWaypoint = meshWaypointPortal;
+		for( wp in dynamicWaypoints ) {
+			portalWaypoints.remove( wp );
 			graph.unlink( wp.node );
 		}
+		dynamicWaypoints = new Array<PortalWaypoint>();
 	}
 
 }

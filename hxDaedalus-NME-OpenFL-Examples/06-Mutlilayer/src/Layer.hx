@@ -39,11 +39,14 @@ class Layer{
 	var right: Float;
 	var bottom: Float;
 	
-	public function new( scope: Sprite, pos_: {x:Float,y:Float}, bmp_: Bitmap, name_: String = '' ){
-		
-		name = name_;
+	public function new( 	scope: 	Sprite
+						, 	pos_: 	{ x: Float, y: Float }
+						, 	bmp_: 	Bitmap
+						, 	name_: 	String = '' 
+						){
 		pos = pos_;
 		bmp = bmp_;
+		name = name_;
 		
 		w = bmp.width;
 		h = bmp.height;
@@ -111,7 +114,9 @@ class Layer{
 		sampler.path = path;
 	}
 	
-	public function findPath( pStart:{x:Float,y:Float}, pEnd: {x:Float,y:Float} ): Array<Float>{
+	public function findPath( pStart: 	{ x: Float, y: Float }
+							, pEnd: 	{ x: Float, y: Float } 
+							): Array<Float> {
 		sampler.reset();
 		//path = new Array<Float>();
 		
@@ -122,7 +127,7 @@ class Layer{
 		return path;
 	}
 	
-	public function findPathNodeLength( pStart: {x: Float, y: Float}, pEnd: {x: Float, y: Float} ){
+	public function findPathNodeLength( pStart: { x: Float, y: Float}, pEnd: { x: Float, y: Float } ){
 		sampler.reset();
 		//path = new Array<Float>();
 		//sampler.path = path;
@@ -132,8 +137,7 @@ class Layer{
 		return path.length;
 	}
 	
-	public function samplerReset()
-	{
+	public function samplerReset(){
 		sampler.reset();
 	}
 	
@@ -142,7 +146,7 @@ class Layer{
 		entity.y = y_ - pos.y;
 	}
 	
-	public function getEntityPos():{ x: Float, y: Float }{
+	public function getEntityPos(): { x: Float, y: Float } {
 		return { x: entity.x + pos.x, y: entity.y + pos.y };
 	}
 	
@@ -163,7 +167,7 @@ class Layer{
 		view.drawMesh( mesh );
 	}
 	
-	public function hasNext(): Bool{
+	public function hasNext(): Bool {
 		return sampler.hasNext;
 	}
 	

@@ -8,7 +8,6 @@ import hxDaedalus.data.Object;
 import hxDaedalus.factories.BitmapObject;
 import hxDaedalus.factories.RectMesh;
 import hxDaedalus.view.SimpleView;
-
 import flash.display.BitmapData;
 import flash.display.MovieClip;
 import flash.display.Stage;
@@ -21,26 +20,22 @@ import flash.events.KeyboardEvent;
 import flash.geom.Matrix;
 import flash.Lib;
 import hxDaedalus.data.math.Point2D;
-
-// polygonal
 import de.polygonal.ds.DA;
 import de.polygonal.ds.Graph;
 import de.polygonal.ds.GraphNode;
 import de.polygonal.ai.pathfinding.AStar;
 import de.polygonal.ai.pathfinding.AStarWaypoint;
-
 import PortalWaypoint;
 import Layer;
 import MultiLayerData;
 import SubGraph;
+import TileMeshLoader;
 
 class Main extends Sprite {
 	
-	//var interconnect: Interconnect;
     var newPath:Bool = false;
 	var graph: Graph<AStarWaypoint>;
 	var aStar: AStar;
-	var data: MultiLayerData;
 	var layers: Array<Layer> = new Array<Layer>();
 	var subGraphs: Array<SubGraph> = new Array<SubGraph>();
 	var path: DA<AStarWaypoint>;
@@ -53,59 +48,49 @@ class Main extends Sprite {
 	
 	public function new() {
 		super();
-		
 		graph = new Graph<AStarWaypoint>();
-		aStar = new AStar(graph);
-		data = new MultiLayerData(onDataLoaded);
-		
+		aStar = new AStar( graph );
+		new TileMeshLoader( onTileLoaded );
 		var stage = Lib.current.stage;
-
-		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		
-		// key presses
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		
-		//var fps = new openfl.display.FPS();
-		//Lib.current.stage.addChild(fps);
-		/**/
+		stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
+		stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+		//Lib.current.stage.addChild(new openfl.display.FPS());
 	}
 	
-	public function onDataLoaded(data) {
-		this.data = data;
-
+	function onTileLoaded(bmps:Array<Bitmap>) {
 		subGraphs = new Array<SubGraph>();
-		var layerNames = ['left layer','top layer','right layer','bottom left','bottom right' ];
 		var layer: Layer;
 		var subGraph: SubGraph;
-		
-		var stampedMeshes = new Bitmap(new BitmapData(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight, true, 0));
+		var pos = MultiLayerData.pos;
+		var portals = MultiLayerData.portals;
+		var layerNames = MultiLayerData.layerNames;
+		var stage = Lib.current.stage;
+		var stampedMeshes = new Bitmap( new BitmapData( stage.stageWidth, stage.stageHeight, true, 0));
 		var translationMatrix = new Matrix();
-		addChild(stampedMeshes);
-		for( i in 0...data.bmps.length ){
-			layer = new Layer( this, data.pos[i], data.bmps[i], layerNames[i] );
-			
+		addChild( stampedMeshes );
+		for( i in 0...bmps.length ){
+			var p = pos[ i ];
+			layer = new Layer( this, p, bmps[ i ], layerNames[ i ] );
 			// stamp meshes on bitmap (so we only draw them once)
 			translationMatrix.identity();
-			translationMatrix.translate(data.pos[i].x, data.pos[i].y);
-			stampedMeshes.bitmapData.draw(layer.viewSprite, translationMatrix);
+			translationMatrix.translate( p.x, p.y );
+			stampedMeshes.bitmapData.draw( layer.viewSprite, translationMatrix );
 			layer.clear();
-			
 			layers.push( layer );
 			subGraph = new SubGraph( graph, layer );
-			subGraph.portals = data.portals[i];
+			subGraph.portals = portals[ i ];
 			subGraph.addPortalPairs();
-			subGraphs.push(subGraph);
+			subGraphs.push( subGraph );
 		}
-		
 		var node0: GraphNode<AStarWaypoint>;
 		var node1: GraphNode<AStarWaypoint>;
 		var wp0: AStarWaypoint;
 		var wp1: AStarWaypoint;
-		
 		var mc = new Sprite();
 		addChild( mc );
 		var g = mc.graphics;
-		for( wp in data.connections ){
+		var connections = MultiLayerData.connections;
+		for( wp in connections ){
 			wp0 = subGraphs[wp[0]].portalWaypoints[wp[1]];
 			wp1 = subGraphs[wp[2]].portalWaypoints[wp[3]];
 			node0 = wp0.node;
@@ -119,7 +104,7 @@ class Main extends Sprite {
 		start = subGraphs[4].portalWaypoints[3];
 	}
 	
-	public function removeEf(){
+	function removeEf(){
 		var stage = Lib.current.stage;
 		stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
@@ -135,14 +120,13 @@ class Main extends Sprite {
 		if( renderPathIterator != null ){
 			var pos = renderPathIterator.currEntityPos();
 			if( pos != null ){
+				clearMeshPoint();
 				subGraph = subGraphHitTest( pos.x, pos.y );
 				start = subGraph.addMeshPoint( pos );
 			}
 		}
 		subGraph = subGraphHitTest( mX, mY );
-		
 		var end = subGraph.addMeshPoint( { x: mX, y: mY } );
-		//trace( end.layer.name );
 		path = new DA<AStarWaypoint>();
 		var pathExists = aStar.find( graph, start, end, path );
 		if( pathExists ){
@@ -161,8 +145,7 @@ class Main extends Sprite {
 		return null;
 	}    
 	
-	function onKeyDown(event:KeyboardEvent):Void
-	{
+	function onKeyDown(event:KeyboardEvent): Void {
 		if (event.keyCode == 27) {  // ESC
 			#if flash
 				flash.system.System.exit(1);
@@ -171,5 +154,4 @@ class Main extends Sprite {
 			#end
 		}
 	}
-	
 }

@@ -63,7 +63,7 @@ class RenderPathIterator{
 			if( hasNext() ){
 				next();
 			} else {
-				//fin();
+				fin();
 			}
 		}
 	}
