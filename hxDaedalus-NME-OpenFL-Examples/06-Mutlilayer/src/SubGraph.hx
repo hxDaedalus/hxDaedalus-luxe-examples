@@ -59,8 +59,7 @@ class SubGraph
 	}
 	
 	public function addMeshPoint( internalPortal_: { x: Float, y: Float } ){
-		
-		removeMeshPoint();
+		//removeMeshPoint();
 		internalPortal = internalPortal_;			
 		meshWaypointPortal = new PortalWaypoint();
 		meshWaypointPortal.layer = layer;
@@ -68,14 +67,20 @@ class SubGraph
 		meshWaypointPortal.node = graph.addNode(graph.createNode(meshWaypointPortal));
 		var len: Int;
 		for( pw in portalWaypoints ){
+			//trace( 'adding points' );
 			len = layer.findPathNodeLength( internalPortal_, pw.portal );
-			graph.addMutualArc( meshWaypointPortal.node, pw.node, len );
+			if( len == 0 ) trace( 'portal connection failed ');
+			if( len != 0 ) graph.addMutualArc( meshWaypointPortal.node, pw.node, len );
 		}
+		return meshWaypointPortal;
 	}
 	
 	public function removeMeshPoint(){
-		var wp: AStarWaypoint = meshWaypointPortal;
-		if( meshWaypointPortal != null ) graph.unlink( wp.node );
+		if( meshWaypointPortal != null ) 
+		{
+			var wp: AStarWaypoint = meshWaypointPortal;
+			graph.unlink( wp.node );
+		}
 	}
 
 }

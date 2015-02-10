@@ -35,7 +35,7 @@ class RenderPathIterator{
 		// find next mesh path
 		if( acrossLayer ){
 			layer = lastPortalWaypoint.layer;
-			trace( layer.name + count );
+			//trace( layer.name + count );
 			//layer.findPath( lastPortalWaypoint.portal, currPortalWaypoint.portal );
 			var len = layer.findPathNodeLength( lastPortalWaypoint.portal, currPortalWaypoint.portal );
 			//layer.drawPath();
@@ -48,14 +48,17 @@ class RenderPathIterator{
 		}
 		lastPortalWaypoint = currPortalWaypoint;
 	}
-
+	
+    public function currEntityPos():{ x: Float, y: Float }{
+		if( layer != null )return layer.getEntityPos();
+		return null;
+	}
+	
 	public function animate(){
 		if( layer == null ) next();
 		if( layer.hasNext() ){
 			layer.next();
 			layer.drawEntity();
-			
-			
 		} else {
 			if( hasNext() ){
 				next();

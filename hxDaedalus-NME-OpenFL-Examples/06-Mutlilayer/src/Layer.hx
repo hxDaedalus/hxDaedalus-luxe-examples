@@ -93,7 +93,7 @@ class Layer{
 		// then configure the path sampler
 		sampler = new LinearPathSampler();
 		sampler.entity = entity;
-		sampler.samplingDistance = 1;
+		sampler.samplingDistance = 3;
 		sampler.path = path;
 	
 	}
@@ -140,6 +140,10 @@ class Layer{
 	public function entityPosition( x_: Float, y_: Float ){
 		entity.x = x_ - pos.x;
 		entity.y = y_ - pos.y;
+	}
+	
+	public function getEntityPos():{ x: Float, y: Float }{
+		return { x: entity.x + pos.x, y: entity.y + pos.y };
 	}
 	
 	public function entitySecondPosition( x_: Float, y_: Float ){
