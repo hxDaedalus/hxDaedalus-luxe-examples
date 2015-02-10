@@ -1,33 +1,56 @@
 package;
 
 import flash.display.Bitmap;
+import flash.display.BitmapData;
+import flash.geom.Rectangle;
+import flash.geom.Point;
 
-@:bitmap("assets/randomHitMesh0_256.gif")
-class Bm0 extends flash.display.BitmapData {}
-@:bitmap("assets/randomHitMesh1_256.gif")
-class Bm1 extends flash.display.BitmapData {}
-@:bitmap("assets/randomHitMesh2_256.gif")
-class Bm2 extends flash.display.BitmapData {}
-@:bitmap("assets/randomHitMesh3_256.gif")
-class Bm3 extends flash.display.BitmapData {}
-@:bitmap("assets/randomHitMesh4_256.gif")
-class Bm4 extends flash.display.BitmapData {}
+@:bitmap("assets/tiled_meshes.png")
+class TiledMeshes extends flash.display.BitmapData {}
 
 class MultiLayerData{
 
 	public var bmps: Array<Bitmap> = new Array<Bitmap>();
-	public function new(){
-		#if html5
-			for( name in names ){
-		    	bmps.push( new Bitmap(openfl.Assets.getBitmapData(name));
+	
+	private var tiledMeshes:BitmapData;
+	private var loadedCallback:MultiLayerData->Void;
+	
+	public function new(loadedCallback:MultiLayerData->Void){
+		
+		this.loadedCallback = loadedCallback;
+		
+	#if html5
+		tiledMeshes = new TiledMeshes(0, 0, onLoaded);
+	#else
+		tiledMeshes = new TiledMeshes(0, 0);
+		onLoaded();
+	#end
+	}
+	
+	public function onLoaded() {
+		// split meshes into individual 256x256 BitmapDatas
+		var sideSize = 256;
+		var num = 5;
+		var clipRect = new Rectangle(0, 0, sideSize, sideSize);
+		var zero = new Point(0, 0);
+		
+		while (num > 0) {
+			var bmd = new BitmapData(sideSize, sideSize, true);
+			bmd.copyPixels(tiledMeshes, clipRect, zero);
+			bmps.push(new Bitmap(bmd));
+			
+			// setup clipRect of next mesh to grab
+			clipRect.x += sideSize;
+			if (clipRect.x >= tiledMeshes.width) {
+				clipRect.x = 0;
+				clipRect.y += sideSize;
 			}
-		#else		
-			bmps.push( new Bitmap( new Bm2(0, 0) ));
-			bmps.push( new Bitmap( new Bm3(0, 0) ));
-			bmps.push( new Bitmap( new Bm4(0, 0) ));
-			bmps.push( new Bitmap( new Bm0(0, 0) ));
-			bmps.push( new Bitmap( new Bm1(0, 0) ));
-		#end
+			num--;
+		}
+		
+		tiledMeshes.dispose();
+		tiledMeshes = null;
+		loadedCallback(this);
 	}
 	
 	public var pos: Array<{x:Float,y:Float}> = [ 	{ x: 80, y: 190 }

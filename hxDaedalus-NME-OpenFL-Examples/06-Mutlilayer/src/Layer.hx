@@ -31,7 +31,7 @@ class Layer{
 	var obj: Object;
 	var bmp:Bitmap;
 	var matrix: Matrix;
-	var viewSprite: Sprite;
+	public var viewSprite: Sprite;
 	var pos: {x:Float,y:Float};
 	var entityPos: {x:Float,y:Float};
 	var w: Float;

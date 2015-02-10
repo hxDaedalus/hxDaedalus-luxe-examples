@@ -22,11 +22,6 @@
 	<haxelib name="hxDaedalus" />
 	<haxelib name="polygonal-ds" />
 	<haxelib name="polygonal-ai" />
-	<assets path="assets/randomHitMesh0_256.gif" rename="Bm0" if="html5" />
-	<assets path="assets/randomHitMesh1_256.gif" rename="Bm1" if="html5" />
-	<assets path="assets/randomHitMesh2_256.gif" rename="Bm2" if="html5" />
-	<assets path="assets/randomHitMesh3_256.gif" rename="Bm3" if="html5" />
-	<assets path="assets/randomHitMesh4_256.gif" rename="Bm4" if="html5" />
 
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

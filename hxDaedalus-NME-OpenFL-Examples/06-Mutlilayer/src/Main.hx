@@ -9,6 +9,7 @@ import hxDaedalus.factories.BitmapObject;
 import hxDaedalus.factories.RectMesh;
 import hxDaedalus.view.SimpleView;
 
+import flash.display.BitmapData;
 import flash.display.MovieClip;
 import flash.display.Stage;
 import flash.events.Event;
@@ -55,15 +56,40 @@ class Main extends Sprite {
 		
 		graph = new Graph<AStarWaypoint>();
 		aStar = new AStar(graph);
-		data = new MultiLayerData();
+		data = new MultiLayerData(onDataLoaded);
 		
+		var stage = Lib.current.stage;
+
+		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		
+		// key presses
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		
+		//var fps = new openfl.display.FPS();
+		//Lib.current.stage.addChild(fps);
+		/**/
+	}
+	
+	public function onDataLoaded(data) {
+		this.data = data;
+
 		subGraphs = new Array<SubGraph>();
 		var layerNames = ['left layer','top layer','right layer','bottom left','bottom right' ];
 		var layer: Layer;
 		var subGraph: SubGraph;
 		
+		var stampedMeshes = new Bitmap(new BitmapData(Lib.current.stage.stageWidth, Lib.current.stage.stageHeight, true, 0));
+		var translationMatrix = new Matrix();
+		addChild(stampedMeshes);
 		for( i in 0...data.bmps.length ){
 			layer = new Layer( this, data.pos[i], data.bmps[i], layerNames[i] );
+			
+			// stamp meshes on bitmap (so we only draw them once)
+			translationMatrix.identity();
+			translationMatrix.translate(data.pos[i].x, data.pos[i].y);
+			stampedMeshes.bitmapData.draw(layer.viewSprite, translationMatrix);
+			layer.clear();
+			
 			layers.push( layer );
 			subGraph = new SubGraph( graph, layer );
 			subGraph.portals = data.portals[i];
@@ -91,21 +117,6 @@ class Main extends Sprite {
 		}
 		
 		start = subGraphs[4].portalWaypoints[3];
-		
-		
-		var s = haxe.Timer.stamp();
-		
-		var stage = Lib.current.stage;
-
-		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		
-		
-		// key presses
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		
-		//var fps = new openfl.display.FPS();
-		//Lib.current.stage.addChild(fps);
-		/**/
 	}
 	
 	public function removeEf(){
