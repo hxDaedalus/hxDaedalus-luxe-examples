@@ -55,8 +55,21 @@ class Main extends Sprite {
 		
 		graph = new Graph<AStarWaypoint>();
 		aStar = new AStar(graph);
-		data = new MultiLayerData();
+		data = new MultiLayerData(onDataLoaded);
 		
+		var stage = Lib.current.stage;
+
+		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		
+		// key presses
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		
+		//var fps = new openfl.display.FPS();
+		//Lib.current.stage.addChild(fps);
+		/**/
+	}
+	
+	public function onDataLoaded(_) {
 		subGraphs = new Array<SubGraph>();
 		var layerNames = ['left layer','top layer','right layer','bottom left','bottom right' ];
 		var layer: Layer;
@@ -91,21 +104,6 @@ class Main extends Sprite {
 		}
 		
 		start = subGraphs[4].portalWaypoints[3];
-		
-		
-		var s = haxe.Timer.stamp();
-		
-		var stage = Lib.current.stage;
-
-		stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-		
-		
-		// key presses
-		stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-		
-		//var fps = new openfl.display.FPS();
-		//Lib.current.stage.addChild(fps);
-		/**/
 	}
 	
 	public function removeEf(){
