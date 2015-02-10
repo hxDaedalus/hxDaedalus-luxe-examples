@@ -72,6 +72,7 @@ class SubGraph
 			if( len == 0 ) trace( 'portal connection failed ');
 			if( len != 0 ) graph.addMutualArc( meshWaypointPortal.node, pw.node, len );
 		}
+		portalWaypoints.push(meshWaypointPortal);
 		return meshWaypointPortal;
 	}
 	
