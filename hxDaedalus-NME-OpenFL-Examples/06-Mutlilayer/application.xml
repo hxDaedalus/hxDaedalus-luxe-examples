@@ -3,10 +3,10 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="Doune Castle" package="lib.hxDaedalus.examples" version="1.0.0" company="JLM" />
+	<meta title="Polygonal-Multilayer" package="lib.hxDaedalus.examples" version="1.0.0" company="JLM" />
 
 	<!-- output -->
-	<app main="Main" path="bin" file="douneCastle" />
+	<app main="Main" path="bin" file="polygonal-multilayer" />
 
 	<!-- window properties -->
 	<window background="#333333" fps="60" />

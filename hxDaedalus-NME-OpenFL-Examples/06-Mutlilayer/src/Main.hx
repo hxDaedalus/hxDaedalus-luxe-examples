@@ -59,7 +59,8 @@ class Main extends Sprite {
 	function onTileLoaded(bmps:Array<Bitmap>) {
 		createMeshLayers( bmps );
 		connectTiles();
-		start = subGraphs[4].portalWaypoints[3];		
+		start = subGraphs[4].portalWaypoints[3];
+		start.internal = true;	
 		var stage = Lib.current.stage;
 		stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 	}
@@ -134,10 +135,12 @@ class Main extends Sprite {
 				clearMeshPoint();
 				subGraph = subGraphHitTest( pos.x, pos.y );
 				start = subGraph.addMeshPoint( pos );
+				start.internal = true;
 			}
 		}
 		subGraph = subGraphHitTest( mX, mY );
 		var end = subGraph.addMeshPoint( { x: mX, y: mY } );
+		end.internal = true;
 		path = new DA<AStarWaypoint>();
 		var pathExists = aStar.find( graph, start, end, path );
 		if( pathExists ){

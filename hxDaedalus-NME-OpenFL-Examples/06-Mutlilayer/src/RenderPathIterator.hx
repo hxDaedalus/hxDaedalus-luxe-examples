@@ -18,10 +18,40 @@ class RenderPathIterator{
 	}
 
 	public function init( da_: DA<AStarWaypoint>, fin_: Void->Void ){
-		da = da_;
+		da = clean( da_ );
 		fin = fin_;
 		lastPortalWaypoint = cast da.get(0);
 		count = 0;
+	}
+
+	public function clean( da_: DA<AStarWaypoint> ): DA<AStarWaypoint>{
+		var daOut: DA<AStarWaypoint> = new DA<AStarWaypoint>();
+		var len = da_.size();
+		var first: PortalWaypoint = cast da_.front();
+		var last: PortalWaypoint = cast da_.back();
+		if( first.layer == last.layer ){
+			daOut.pushBack( first );
+			daOut.pushBack( last );
+			return daOut;
+		}
+		var startLayer = first.layer;
+		var currLayer = startLayer;
+		var lastLayer = last.layer;
+		var curr: PortalWaypoint; 
+		var prev: PortalWaypoint = null ;
+		daOut.pushBack( first );
+		for( i in 1...(len-1) ){
+			curr = cast da_.get( i );
+			if( curr.layer == currLayer ){
+				prev = curr;
+				continue;
+			}
+			if( prev != null ) { if( prev != first ) daOut.pushBack( prev ); }
+			daOut.pushBack( curr );
+			currLayer = curr.layer;
+		}
+		daOut.pushBack( last );
+		return daOut;
 	}
 
 	public function hasNext(): Bool {

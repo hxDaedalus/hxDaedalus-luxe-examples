@@ -6,6 +6,8 @@ import de.polygonal.ai.pathfinding.AStarWaypoint;
 class PortalWaypoint extends AStarWaypoint {
 	
 	public var layer: Layer;
+	public var internal: Bool = false;
+	
 	public var portal( get, set ): {x:Float,y:Float};
 	
 	var _portal:{x:Float,y:Float};
