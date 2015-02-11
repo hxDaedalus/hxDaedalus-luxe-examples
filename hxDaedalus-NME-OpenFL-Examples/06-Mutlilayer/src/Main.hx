@@ -52,12 +52,19 @@ class Main extends Sprite {
 		aStar = new AStar( graph );
 		new TileMeshLoader( onTileLoaded );
 		var stage = Lib.current.stage;
-		stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 		stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 		//Lib.current.stage.addChild(new openfl.display.FPS());
 	}
 	
 	function onTileLoaded(bmps:Array<Bitmap>) {
+		createMeshLayers( bmps );
+		connectTiles();
+		start = subGraphs[4].portalWaypoints[3];		
+		var stage = Lib.current.stage;
+		stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
+	}
+	
+	function createMeshLayers(bmps:Array<Bitmap>) {
 		subGraphs = new Array<SubGraph>();
 		var layer: Layer;
 		var subGraph: SubGraph;
@@ -81,7 +88,10 @@ class Main extends Sprite {
 			subGraph.portals = portals[ i ];
 			subGraph.addPortalPairs();
 			subGraphs.push( subGraph );
-		}
+		}	
+	}
+	
+	function connectTiles(){
 		var node0: GraphNode<AStarWaypoint>;
 		var node1: GraphNode<AStarWaypoint>;
 		var wp0: AStarWaypoint;
@@ -100,8 +110,6 @@ class Main extends Sprite {
 			g.lineTo( wp1.x, wp1.y );
 			graph.addMutualArc( node0, node1, 1 ); 
 		}
-		
-		start = subGraphs[4].portalWaypoints[3];
 	}
 	
 	function removeEf(){
@@ -114,8 +122,11 @@ class Main extends Sprite {
     }
 	
     function onMouseUp( event: MouseEvent ): Void {		
-		var mX = stage.mouseX;
-		var mY = stage.mouseY;
+		var stage = Lib.current.stage;
+		startRoute( stage.mouseX, stage.mouseY );
+	}
+		
+	function startRoute( mX: Float, mY: Float ){
 		var subGraph;
 		if( renderPathIterator != null ){
 			var pos = renderPathIterator.currEntityPos();

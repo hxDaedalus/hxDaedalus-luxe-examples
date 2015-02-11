@@ -24,7 +24,7 @@ class RenderPathIterator{
 		count = 0;
 	}
 
-	public function hasNext():Bool{
+	public function hasNext(): Bool {
 		return count + 1 < da.size(); 
 	}
 
@@ -32,19 +32,13 @@ class RenderPathIterator{
 		count++;
 		var currPortalWaypoint: PortalWaypoint = cast da.get(count);
 		var acrossLayer = ( lastPortalWaypoint.layer == currPortalWaypoint.layer );
-		// find next mesh path
-		if( acrossLayer ){
+		if( acrossLayer ){ // find next mesh path
 			layer = lastPortalWaypoint.layer;
-			//trace( layer.name + count );
-			//layer.findPath( lastPortalWaypoint.portal, currPortalWaypoint.portal );
 			var len = layer.findPathNodeLength( lastPortalWaypoint.portal, currPortalWaypoint.portal );
-			//layer.drawPath();
 			layer.samplerReset();
-			
 			if( len == 0 ) next();
 		} else {
-			layer = null;
-			// render between portals here
+			layer = null;// render between portals here
 		}
 		lastPortalWaypoint = currPortalWaypoint;
 	}
