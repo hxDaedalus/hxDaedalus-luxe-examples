@@ -3,14 +3,14 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="Doune Castle" package="lib.hxDaedalus.examples" version="1.0.0" company="JLM" />
+	<meta title="Polygonal-Multilayer" package="lib.hxDaedalus.examples" version="1.0.0" company="JLM" />
 
 	<!-- output -->
-	<app main="Main" path="bin" file="douneCastle" />
+	<app main="Main" path="bin" file="polygonal-multilayer" />
 
 	<!-- window properties -->
-	<window background="#FFFFFF" fps="60" />
-	<window width="985" height="569" unless="mobile" />
+	<window background="#333333" fps="60" />
+	<window width="1024" height="780" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<set name="SWF_VERSION" value="11.2" />
@@ -20,10 +20,8 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="hxDaedalus" />
-	
-	<assets path="assets/upper.png" rename="Upper" if="html5" />
-	<assets path="assets/castle.png" rename="Castle" if="html5" />
-	<assets path="assets/lower.png" rename="Lower" if="html5" />
+	<haxelib name="polygonal-ds" />
+	<haxelib name="polygonal-ai" />
 
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

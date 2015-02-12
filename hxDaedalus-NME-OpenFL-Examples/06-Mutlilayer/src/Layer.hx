@@ -17,7 +17,7 @@ import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.KeyboardEvent;
 import flash.geom.Matrix;
-import hxDaedalus.data.math.Point2D;
+
 
 class Layer{
 	public var name: String;
@@ -31,18 +31,22 @@ class Layer{
 	var obj: Object;
 	var bmp:Bitmap;
 	var matrix: Matrix;
-	var viewSprite: Sprite;
-	var pos: Point2D;
-	var entityPos: Point2D;
+	public var viewSprite: Sprite;
+	var pos: {x:Float,y:Float};
+	var entityPos: {x:Float,y:Float};
 	var w: Float;
 	var h: Float;
 	var right: Float;
 	var bottom: Float;
-	public function new( scope: Sprite,  entityPos: Point2D,pos_: Point2D, bmp_: Bitmap, name_: String = '' ){
-		
-		name = name_;
+	
+	public function new( 	scope: 	Sprite
+						, 	pos_: 	{ x: Float, y: Float }
+						, 	bmp_: 	Bitmap
+						, 	name_: 	String = '' 
+						){
 		pos = pos_;
 		bmp = bmp_;
+		name = name_;
 		
 		w = bmp.width;
 		h = bmp.height;
@@ -74,23 +78,13 @@ class Layer{
 		matrix = new Matrix();
 		matrix.translate( pos.x, pos.y );
 		
-		// stamp it on the overlay bitmap
-		//_overlay.bitmapData.draw(viewSpriteLower,_matrixLower );
-		//_overlay.bitmapData.draw(viewSpriteUpper, _matrixUpper );
-		
 		// we need an entity
 		entity = new EntityAI();
 		secondEntity = new EntityAI();
 		// set radius size for your entity
-		entity.radius = 2;
+		entity.radius = 0.8;
 		secondEntity.radius = 4;
-		// set a position
-		entity.x = entityPos.x;
-		entity.y = entityPos.y;
-		
-		// show entity on screen
-		view.drawEntity( entity, false );
-		
+
 		// now configure the pathfinder
 		pathfinder = new PathFinder();
 		pathfinder.entity = entity; // set the entity
@@ -102,7 +96,7 @@ class Layer{
 		// then configure the path sampler
 		sampler = new LinearPathSampler();
 		sampler.entity = entity;
-		sampler.samplingDistance = 5;
+		sampler.samplingDistance = 3;
 		sampler.path = path;
 	
 	}
@@ -120,18 +114,40 @@ class Layer{
 		sampler.path = path;
 	}
 	
-	public function findPath( x_: Float, y_: Float, path_: Array<Float> ){
-		pathfinder.findPath( x_ - pos.x, y_ - pos.y, path_ );
+	public function findPath( pStart: 	{ x: Float, y: Float }
+							, pEnd: 	{ x: Float, y: Float } 
+							): Array<Float> {
+		sampler.reset();
+		//path = new Array<Float>();
+		
+		entity.x = pStart.x - pos.x;
+		entity.y = pStart.y - pos.y;
+		sampler.entity = entity;
+		pathfinder.findPath( pEnd.x - pos.x, pEnd.y - pos.y, path );
+		return path;
 	}
-
-	public function samplerReset()
-	{
+	
+	public function findPathNodeLength( pStart: { x: Float, y: Float}, pEnd: { x: Float, y: Float } ){
+		sampler.reset();
+		//path = new Array<Float>();
+		//sampler.path = path;
+		entity.x = pStart.x - pos.x;
+		entity.y = pStart.y - pos.y;
+		pathfinder.findPath( pEnd.x - pos.x, pEnd.y - pos.y, path );
+		return path.length;
+	}
+	
+	public function samplerReset(){
 		sampler.reset();
 	}
 	
 	public function entityPosition( x_: Float, y_: Float ){
 		entity.x = x_ - pos.x;
 		entity.y = y_ - pos.y;
+	}
+	
+	public function getEntityPos(): { x: Float, y: Float } {
+		return { x: entity.x + pos.x, y: entity.y + pos.y };
 	}
 	
 	public function entitySecondPosition( x_: Float, y_: Float ){
@@ -147,7 +163,11 @@ class Layer{
 		view.drawEntity( entity );
 	}
 	
-	public function hasNext(): Bool{
+	public function drawMesh(){
+		view.drawMesh( mesh );
+	}
+	
+	public function hasNext(): Bool {
 		return sampler.hasNext;
 	}
 	
