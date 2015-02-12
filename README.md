@@ -27,15 +27,8 @@ You can view some of the examples:
  - 05-GridMaze: [flash](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/05-GridMaze/bin/flash/bin/GridMaze.swf) | 
  [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/05-GridMaze/bin/html5/bin/index.html) | 
  [android](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/05-GridMaze/bin/android/bin/bin/GridMaze-debug.apk)
- - 06-Multilayer: flash | html5 | android (not updated yet)
-
+ - 06-Multilayer: [flash](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/06-Multilayer/bin/flash/bin/polygonal-multilayer.swf) | 
+ [html5](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/06-Multilayer/bin/html5/bin/index.html) | 
+ [android](https://rawgit.com/Justinfront/hxDaedalus-NME-OpenFL-Examples/master/hxDaedalus-NME-OpenFL-Examples/06-Multilayer/bin/android/bin/bin/polygonal-multilayer-debug.apk)
  
-License is MIT for code.
-
-
-06-Multilayer example uses a wikipedia image and derived png's created in flash and a different license applies.
-http://creativecommons.org/licenses/by-sa/3.0
-
-Jonathan Oldenbuck - Own work by uploader, based on plan in Simpson, W.D. "Doune Castle" Proceedings of the Society of Antiquaries of Scotland 72: 73-83 [1]
-Ground and first floor plans of Doune Castle, near Stirling, Scotland.
-http://en.wikipedia.org/wiki/Doune_Castle#mediaviewer/File:Doune_Castle_plan.png
+License is MIT.
