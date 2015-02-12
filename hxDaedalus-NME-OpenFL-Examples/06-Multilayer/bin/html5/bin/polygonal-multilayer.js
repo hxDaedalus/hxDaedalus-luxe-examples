@@ -934,6 +934,9 @@ Main.prototype = $extend(openfl.display.Sprite.prototype,{
 			layer = new Layer(this,p,bmps[i],layerNames[i]);
 			translationMatrix.identity();
 			translationMatrix.translate(p.x,p.y);
+			var bmd = bmps[i].bitmapData;
+			bmd.threshold(bmd,bmd.rect,new openfl.geom.Point(),">",131586,0,16777215);
+			stampedMeshes.bitmapData.draw(bmd,translationMatrix);
 			stampedMeshes.bitmapData.draw(layer.viewSprite,translationMatrix);
 			layer.clear();
 			this.layers.push(layer);

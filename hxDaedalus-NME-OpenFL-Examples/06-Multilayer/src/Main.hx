@@ -18,6 +18,7 @@ import flash.display.Sprite;
 import flash.display.Graphics;
 import flash.events.KeyboardEvent;
 import flash.geom.Matrix;
+import flash.geom.Point;
 import flash.Lib;
 import hxDaedalus.data.math.Point2D;
 import de.polygonal.ds.DA;
@@ -73,7 +74,7 @@ class Main extends Sprite {
 		var portals = MultiLayerData.portals;
 		var layerNames = MultiLayerData.layerNames;
 		var stage = Lib.current.stage;
-		var stampedMeshes = new Bitmap( new BitmapData( stage.stageWidth, stage.stageHeight, true, 0));
+		var stampedMeshes = new Bitmap( new BitmapData( stage.stageWidth, stage.stageHeight, true, 0 ) );
 		var translationMatrix = new Matrix();
 		addChild( stampedMeshes );
 		for( i in 0...bmps.length ){
@@ -82,6 +83,9 @@ class Main extends Sprite {
 			// stamp meshes on bitmap (so we only draw them once)
 			translationMatrix.identity();
 			translationMatrix.translate( p.x, p.y );
+			var bmd = bmps[i].bitmapData;
+			bmd.threshold( bmd, bmd.rect, new Point(), ">", 0x020202, 0, 0xFFFFFF ); // remove non-black pixels
+			stampedMeshes.bitmapData.draw( bmd, translationMatrix );
 			stampedMeshes.bitmapData.draw( layer.viewSprite, translationMatrix );
 			layer.clear();
 			layers.push( layer );
