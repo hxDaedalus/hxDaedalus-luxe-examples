@@ -1,0 +1,39 @@
+{
+
+  luxe:{
+    window: {
+      width:1024,
+      height:780,
+      title:'BitmapPathfinding',
+      fullscreen:false,
+      resizable:true,
+      borderless:false
+    }
+  },
+
+  project : {
+    name : 'BitmapPathfinding',
+    version : '1.0.0',
+    author : 'hxDaedalus',
+
+    app : {
+	  main: 'Main',
+	  output: 'bin',
+      name : 'BitmapPathfinding',
+      package : 'lib.hxDaedalus.examples'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+		hxDaedalus : '*'
+      }
+    },
+
+    files : {
+      assets : 'assets/'
+    }
+
+  }
+
+}
