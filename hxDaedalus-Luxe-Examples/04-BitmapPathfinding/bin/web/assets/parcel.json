@@ -1,0 +1,6 @@
+{
+    "textures" : [
+        { "id" : "assets/galapagosColor.png" },
+        { "id" : "assets/galapagosBW.png" }
+    ]
+}

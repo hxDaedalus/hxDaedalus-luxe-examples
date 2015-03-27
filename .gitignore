@@ -1,0 +1,33 @@
+# ignore all these
+
+*.*
+.settings/
+.DS_Store
+
+# except these
+
+!.gitignore
+!README.*
+!LICENSE.*
+
+!hxDaedalus-Luxe-Examples/01-Basics/bin/web/*.*
+!hxDaedalus-Luxe-Examples/01-Basics/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/01-Basics/bin/web/assets/*.*
+
+!hxDaedalus-Luxe-Examples/02-FromBitmap/bin/web/*.*
+!hxDaedalus-Luxe-Examples/02-FromBitmap/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/02-FromBitmap/bin/web/assets/*.*
+
+!hxDaedalus-Luxe-Examples/03-Pathfinding/bin/web/*.*
+!hxDaedalus-Luxe-Examples/03-Pathfinding/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/03-Pathfinding/bin/web/assets/*.*
+
+!hxDaedalus-Luxe-Examples/04-BitmapPathfinding/bin/web/*.*
+!hxDaedalus-Luxe-Examples/04-BitmapPathfinding/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/04-BitmapPathfinding/bin/web/assets/*.*
+
+!hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/*.*
+!hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/assets/*.*
+
+
