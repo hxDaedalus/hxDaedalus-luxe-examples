@@ -1,0 +1,39 @@
+{
+
+  luxe:{
+    window: {
+      width:600,
+      height:600,
+      title:'FromBitmap',
+      fullscreen:false,
+      resizable:true,
+      borderless:false
+    }
+  },
+
+  project : {
+    name : 'FromBitmap',
+    version : '1.0.0',
+    author : 'hxDaedalus',
+
+    app : {
+	  main: 'Main',
+	  output: 'bin',
+      name : 'FromBitmap',
+      package : 'lib.hxDaedalus.examples'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+		hxDaedalus : '*'
+      }
+    },
+
+    files : {
+      assets : 'assets/'
+    }
+
+  }
+
+}
