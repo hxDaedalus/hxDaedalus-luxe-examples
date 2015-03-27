@@ -1,8 +1,0 @@
-
--cmd openfl build application.xml flash
---next
--cmd open bin/flash/bin/polygonal-multilayer.swf
---next
--cmd openfl build application.xml html5
---next 
--cmd open bin/html5/bin/index.html
