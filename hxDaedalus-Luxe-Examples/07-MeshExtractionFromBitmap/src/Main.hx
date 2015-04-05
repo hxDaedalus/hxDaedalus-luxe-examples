@@ -1,18 +1,9 @@
 package;
 
 import hxDaedalus.data.math.Tools;
-/*
-import hxDaedalus.data.Mesh;
-import hxDaedalus.data.Object;
-import hxDaedalus.factories.BitmapObject;
-import hxDaedalus.factories.RectMesh;
-import hxDaedalus.graphics.Pixels;
-*/
 import hxDaedalus.graphics.TargetCanvas;
 import hxDaedalus.graphics.SimpleDrawingContext;
 import hxDaedalus.data.math.Point2D;
-//import hxDaedalus.view.SimpleView;
-
 import luxe.Input.Key;
 import luxe.Input.KeyEvent;
 import luxe.Sprite;
@@ -51,8 +42,8 @@ class Main extends luxe.Game {
 		
         // create a viewport
 		var g = new SimpleDrawingContext( new TargetCanvas() );
-		var dx = 200;
-		var dy = 200;
+		var dx = 310;
+		var dy = 220;
 		g.lineStyle(1, 0xFF0000);
 		// use a 3 iterator instead?
 		var i: Int = 0;
