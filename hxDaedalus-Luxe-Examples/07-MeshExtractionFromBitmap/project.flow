@@ -1,0 +1,39 @@
+{
+
+  luxe:{
+    window: {
+      width:600,
+      height:600,
+      title:'MeshExtractionFromBitmap',
+      fullscreen:false,
+      resizable:true,
+      borderless:false
+    }
+  },
+
+  project : {
+    name : 'MeshExtractionFromBitmap',
+    version : '0.0.3',
+    author : 'hxDaedalus',
+
+    app : {
+	  main: 'Main',
+	  output: 'bin',
+      name : 'MeshExtractionFromBitmap',
+      package : 'lib.hxDaedalus.examples'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+		hxDaedalus : '*'
+      }
+    },
+
+    files : {
+      assets : 'assets/'
+    }
+
+  }
+
+}
