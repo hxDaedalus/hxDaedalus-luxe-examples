@@ -16,5 +16,6 @@ You can view some of the examples:
  - 03-Pathfinding: [web](http://hxdaedalus.github.io/hxDaedalus-luxe-examples/hxDaedalus-Luxe-Examples/03-Pathfinding/bin/web/index.html)
  - 04-BitmapPathfinding: [web](http://hxdaedalus.github.io/hxDaedalus-luxe-examples/hxDaedalus-Luxe-Examples/04-BitmapPathfinding/bin/web/index.html)
  - 05-GridMaze: [web](http://hxdaedalus.github.io/hxDaedalus-luxe-examples/hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/index.html)
+ - 07-MeshExtractionFromBitmap: [web](http://hxdaedalus.github.io/hxDaedalus-luxe-examples/hxDaedalus-Luxe-Examples/07-MeshExtractionFromBitmap/bin/web/index.html)
  
 License is MIT.
