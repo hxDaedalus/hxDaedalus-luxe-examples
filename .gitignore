@@ -30,4 +30,7 @@
 !hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/lib/*.*
 !hxDaedalus-Luxe-Examples/05-GridMaze/bin/web/assets/*.*
 
+!hxDaedalus-Luxe-Examples/07-MeshExtractionFromBitmap/bin/web/*.*
+!hxDaedalus-Luxe-Examples/07-MeshExtractionFromBitmap/bin/web/lib/*.*
+!hxDaedalus-Luxe-Examples/07-MeshExtractionFromBitmap/bin/web/assets/*.*
 
