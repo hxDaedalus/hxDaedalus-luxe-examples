@@ -23,54 +23,57 @@ License is MIT.
 Setup of Snowkit and hxDaedalus
 =================================
 
-1) Install haxe if you don't have latest
+1) Install haxe if you don't have latest.
 http://haxe.org/download/
 
-2) Install git if you don't have git
+2) Install git if you don't have git.
 https://git-scm.com/downloads
 
 2) setup haxelib eg:
-
+```
 haxelib setup
    Please enter haxelib repository path with write access
    Hit enter for default (/usr/lib/haxe/lib)
 Path :
-   <hit Enter>
+   hit Enter
    haxelib repository is now /usr/lib/haxe/lib/
-
+```
 3) Install hxcpp
 
 haxelib install hxcpp
 
 4) Install git version of snowkit you can get these in any order.
-haxelib git luxe https://github.com/underscorediscovery/luxe.git
-haxelib git flow https://github.com/underscorediscovery/flow.git
-haxelib git snow https://github.com/underscorediscovery/snow.git
 
-5) Rebuild Snow for required platforms
+```haxelib git luxe https://github.com/underscorediscovery/luxe.git```
+
+```haxelib git flow https://github.com/underscorediscovery/flow.git```
+
+```haxelib git snow https://github.com/underscorediscovery/snow.git```
+
+5) Rebuild Snow for required platforms.
 go into the snow haxelib on mac it would be...
 
-cd /usr/lib/haxeLibrary/snow/git/project
+```cd /usr/lib/haxeLibrary/snow/git/project```.
 
 then rebuild for mac ( or windows for windows ).
 
-haxelib run flow run mac
+```haxelib run flow run mac```
 
 6) Install hxDaedalus from git you need the additional parameters since it's in an src folder.
 
-haxelib git hxDaedalus https://github.com/hxDaedalus/hxDaedalus.git master src
+```haxelib git hxDaedalus https://github.com/hxDaedalus/hxDaedalus.git master src```
 
 7) Then you can clone this repository to try the examples.
 
-git clone https://github.com/hxDaedalus/hxDaedalus-luxe-examples.git
+```git clone https://github.com/hxDaedalus/hxDaedalus-luxe-examples.git```
 
-8) Then you can go into each of the example and try them so on a mac you may want to try the mac and web versions eg: 
+8) Then you can go into each of the example and try them so on a mac you may want to try the mac and web versions eg:. 
 
-cd 04-BitmapPathfinding
+```cd 04-BitmapPathfinding```
 
-haxe flowMac.hxml  
+```haxe flowMac.hxml  ```
 
-or 
+or
 
-haxe flowWeb.hxml
+```haxe flowWeb.hxml```
 
