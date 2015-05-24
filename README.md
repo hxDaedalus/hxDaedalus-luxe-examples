@@ -53,7 +53,7 @@ Path :
 5) Rebuild Snow for required platforms.
 go into the snow haxelib on mac it would be...
 
-```cd /usr/lib/haxeLibrary/snow/git/project```.
+```cd /usr/lib/haxeLibrary/snow/git/project```
 
 then rebuild for mac ( or windows for windows ).
 
