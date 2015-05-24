@@ -40,7 +40,7 @@ Path :
 ```
 3) Install hxcpp
 
-haxelib install hxcpp
+```haxelib install hxcpp```
 
 4) Install git version of snowkit you can get these in any order.
 
