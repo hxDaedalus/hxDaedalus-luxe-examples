@@ -19,12 +19,8 @@ class Main extends luxe.Game {
 		// white background
 		Luxe.renderer.clear_color.rgb(0xFFFFFF);
 		
-        // load the asset
-        Luxe.loadTexture('assets/MeshExtractionFromBitmap.png', onLoaded);
-
-    } // ready
-
-	function onLoaded(texture):Void {
+		// get the texture
+		var texture = Luxe.resources.texture('assets/MeshExtractionFromBitmap.png');
 		
 		// show the image
 		var sprite = new Sprite({
@@ -65,5 +61,15 @@ class Main extends luxe.Game {
         }
 
     } // onkeyup
+    
+	// standard setup type stuff
+	override function config( config: luxe.AppConfig ) {
+
+    	config.preload.textures = [
+        	{ id:'assets/MeshExtractionFromBitmap.png' }
+    		];
+    		config.render.antialiasing = 4;
+    		return config;
+		}
 
 } // Main

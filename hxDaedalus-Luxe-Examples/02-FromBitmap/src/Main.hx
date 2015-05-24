@@ -16,11 +16,11 @@ import phoenix.Texture;
 
 class Main extends luxe.Game {
 
-    var _mesh : Mesh;
-    var _view : SimpleView;
-    var _object : Object;
+    var mesh : Mesh;
+    var view : SimpleView;
+    var object : Object;
 
-	var _texture : Texture;
+	var texture : Texture;
 	
 	// entry point
     override function ready() {
@@ -28,37 +28,31 @@ class Main extends luxe.Game {
 		// white background
 		Luxe.renderer.clear_color.rgb(0xFFFFFF);
 		
-        // load the asset
-        Luxe.loadTexture('assets/FromBitmap.png', onLoaded);
-
-    } // ready
-
-	function onLoaded(texture):Void {
-		
-		_texture = texture;
+		// get the texture
+		texture = Luxe.resources.texture('assets/FromBitmap.png');
 		
 		// build a rectangular 2 polygons mesh
-		_mesh = RectMesh.buildRectangle( 600, 600 );
+		mesh = RectMesh.buildRectangle( 600, 600 );
 		
 		// show the image
 		var sprite = new Sprite({
-			texture: _texture,
+			texture: texture,
 			centered: false,
 			pos: new Vector(110, 220),
 			depth: -1
 		});
 		
         // create a viewport
-		_view = new SimpleView( new TargetCanvas() );
+		view = new SimpleView( new TargetCanvas() );
 		
         // create an object from bitmap
-        _object = BitmapObject.buildFromBmpData( _texture );
-        _object.x = 110;
-        _object.y = 220;
-        _mesh.insertObject( _object );
+        object = BitmapObject.buildFromBmpData( texture );
+        object.x = 110;
+        object.y = 220;
+        mesh.insertObject( object );
         
         // display result mesh
-        _view.drawMesh( _mesh );
+        view.drawMesh( mesh );
 	}
 	
 	override function onkeyup(e:KeyEvent) {
@@ -68,5 +62,14 @@ class Main extends luxe.Game {
         }
 
     } // onkeyup
+	
+	// standard setup type stuff
+	override function config( config: luxe.AppConfig ) {
 
+    	config.preload.textures = [
+	        { id : 'assets/FromBitmap.png'}
+    		];
+    		config.render.antialiasing = 4;
+    		return config;
+	}
 } // Main

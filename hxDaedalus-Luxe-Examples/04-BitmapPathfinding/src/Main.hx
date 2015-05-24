@@ -41,33 +41,10 @@ class Main extends luxe.Game {
 	
 	// entry point
     override function ready() {
-
-        // fetch a list of assets to load from the json file
-        Luxe.loadJSON('assets/parcel.json', function (asset):Void {
-
-			// then create a parcel to load it for us
-			var parcel = new Parcel();
-			parcel.from_json(asset.json);
-
-			// but, we also want a progress bar for the parcel,
-			// this is a default one, you can do your own
-			new ParcelProgress({
-				parcel      : parcel,
-				oncomplete  : onLoaded
-			});
-
-			// go!
-			parcel.load();
-			
-		});
-
-    } // ready
-
-	function onLoaded(_):Void {
 		
 		// load the images
-		textureColor = Luxe.loadTexture("assets/galapagosColor.png");
-		textureBW = Luxe.loadTexture("assets/galapagosBW.png");
+		textureColor = Luxe.resources.texture("assets/galapagosColor.png");
+		textureBW = Luxe.resources.texture("assets/galapagosBW.png");
 		
 		// build a rectangular 2 polygons mesh
 		_mesh = RectMesh.buildRectangle( 1024, 780 );
@@ -183,5 +160,14 @@ class Main extends luxe.Game {
         }
 		
     } // update
+	// standard setup type stuff
+	override function config( config: luxe.AppConfig ) {
 
+    	config.preload.textures = [
+	        { id : "assets/galapagosColor.png" },
+	        { id : "assets/galapagosBW.png" }
+    		];
+    		config.render.antialiasing = 4;
+    		return config;
+	}
 } // Main
