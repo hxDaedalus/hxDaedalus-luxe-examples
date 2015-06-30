@@ -26,7 +26,8 @@
     build : {
       dependencies : {
         luxe : '*',
-		hxDaedalus : '*'
+		hxDaedalus : '*',
+        hxPixels : '*'
       }
     },
 

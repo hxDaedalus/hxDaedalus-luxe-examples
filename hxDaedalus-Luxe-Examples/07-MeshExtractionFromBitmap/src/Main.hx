@@ -1,8 +1,8 @@
 package;
 
 import hxDaedalus.data.math.Tools;
-import hxDaedalus.graphics.TargetCanvas;
-import hxDaedalus.graphics.SimpleDrawingContext;
+import wings.core.TargetCanvas;
+import wings.core.SimpleDrawingContext;
 import hxDaedalus.data.math.Point2D;
 import luxe.Input.Key;
 import luxe.Input.KeyEvent;
@@ -12,16 +12,16 @@ import phoenix.Texture;
 
 
 class Main extends luxe.Game {
-	
+
 	// entry point
     override function ready() {
 
 		// white background
 		Luxe.renderer.clear_color.rgb(0xFFFFFF);
-		
+
 		// get the texture
 		var texture = Luxe.resources.texture('assets/MeshExtractionFromBitmap.png');
-		
+
 		// show the image
 		var sprite = new Sprite({
 			texture: texture,
@@ -29,13 +29,13 @@ class Main extends luxe.Game {
 			pos: new Vector(110, 220),
 			depth: -1
 		});
-		
+
         var vertices = new Array<Point2D>();
         var triangles = new Array<Int>();
-		
-		
+
+
 		Tools.extractMeshFromBitmap( texture, vertices, triangles);
-		
+
         // create a viewport
 		var g = new SimpleDrawingContext( new TargetCanvas() );
 		var dx = 310;
@@ -50,10 +50,10 @@ class Main extends luxe.Game {
 		    g.lineTo(vertices[triangles[i]].x + dx, vertices[triangles[i]].y + dy);
 			i+=3;
 	    }
-		
-		
+
+
 	}
-	
+
 	override function onkeyup(e:KeyEvent) {
 
         if (e.keycode == Key.escape) {
@@ -61,7 +61,7 @@ class Main extends luxe.Game {
         }
 
     } // onkeyup
-    
+
 	// standard setup type stuff
 	override function config( config: luxe.AppConfig ) {
 

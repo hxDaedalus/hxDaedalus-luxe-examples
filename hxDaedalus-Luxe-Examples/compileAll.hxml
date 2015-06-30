@@ -1,0 +1,34 @@
+-cmd cd 01-Basics
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
+--next
+-cmd cd ..
+-cmd cd 02-FromBitmap
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
+--next
+-cmd cd ..
+-cmd cd 03-Pathfinding
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
+--next
+-cmd cd ..
+-cmd cd 04-BitmapPathfinding
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
+--next
+-cmd cd ..
+-cmd cd 05-GridMaze
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
+--next
+-cmd cd ..
+-cmd cd 07-MeshExtractionFromBitmap
+-cmd haxe flowWin.hxml
+--next
+-cmd haxe flowWeb.hxml
